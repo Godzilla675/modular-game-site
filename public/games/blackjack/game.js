@@ -179,6 +179,7 @@ class Blackjack {
     }
 
     this.gameState = 'playing';
+    this.chips -= this.bet;
     this.playerHand = [];
     this.dealerHand = [];
     this.result = null;
@@ -192,16 +193,17 @@ class Blackjack {
     this.updatePlayerValue();
     this.updateDealerValue(true); // Show only first card value initially
 
+    this.updateUI();
+
     // Check for blackjack
     if (this.playerValue === 21 && this.playerHand.length === 2) {
       this.gameState = 'dealer';
+      this.updateButtonStates();
       this.showMessage('BLACKJACK!', 'win');
       const timer = setTimeout(() => this.dealerPlay(), 1500);
       this.timers.push(timer);
       return;
     }
-
-    this.updateUI();
   }
 
   hit() {
@@ -308,6 +310,7 @@ class Blackjack {
   }
 
   endHand() {
+    this.renderCards();
     this.updateDisplay();
 
     if (this.chips <= 0) {
@@ -404,14 +407,12 @@ class Blackjack {
   }
 
   updateDisplay() {
-    document.querySelector('#bj-chips').textContent = this.chips;
-    document.querySelector('#bj-bet').textContent = this.bet;
-    document.querySelector('#bj-player-value').textContent = this.gameState === 'betting' ? '' : `Value: ${this.playerValue}`;
+    this.container.querySelector('#bj-chips').textContent = this.chips;
+    this.container.querySelector('#bj-bet').textContent = this.bet;
+    this.container.querySelector('#bj-player-value').textContent = this.gameState === 'betting' ? '' : `Value: ${this.playerValue}`;
     
-    const dealerValueEl = document.querySelector('#bj-dealer-value');
-    if (this.gameState === 'playing' && this.dealerHand.length > 0) {
-      dealerValueEl.textContent = `First Card Value: ${this.getCardValue(this.dealerHand[0])}`;
-    } else if (this.gameState !== 'betting' && this.dealerHand.length > 0) {
+    const dealerValueEl = this.container.querySelector('#bj-dealer-value');
+    if (this.gameState !== 'betting' && this.dealerHand.length > 0) {
       dealerValueEl.textContent = `Value: ${this.dealerValue}`;
     } else {
       dealerValueEl.textContent = '';
@@ -419,8 +420,8 @@ class Blackjack {
   }
 
   renderCards() {
-    const playerCardsEl = document.querySelector('#bj-player-cards');
-    const dealerCardsEl = document.querySelector('#bj-dealer-cards');
+    const playerCardsEl = this.container.querySelector('#bj-player-cards');
+    const dealerCardsEl = this.container.querySelector('#bj-dealer-cards');
 
     playerCardsEl.innerHTML = this.playerHand.map(card => this.createCardElement(card)).join('');
 
@@ -481,7 +482,7 @@ class Blackjack {
   }
 
   showMessage(message, type) {
-    const messageEl = document.querySelector('#bj-message');
+    const messageEl = this.container.querySelector('#bj-message');
     messageEl.textContent = message;
     messageEl.className = `blackjack-message ${type}`;
   }

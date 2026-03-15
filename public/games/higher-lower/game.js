@@ -119,9 +119,13 @@ class HigherLower {
     this.playAgainBtn = this.gameOverEl.querySelector('.higher-lower-play-again');
 
     // Add event listeners
-    this.higherBtn.addEventListener('click', () => this.guess('higher'));
-    this.lowerBtn.addEventListener('click', () => this.guess('lower'));
-    this.playAgainBtn.addEventListener('click', () => this.start());
+    this._handleHigher = () => this.guess('higher');
+    this._handleLower = () => this.guess('lower');
+    this._handlePlayAgain = () => this.start();
+
+    this.higherBtn.addEventListener('click', this._handleHigher);
+    this.lowerBtn.addEventListener('click', this._handleLower);
+    this.playAgainBtn.addEventListener('click', this._handlePlayAgain);
 
     this.start();
   }
@@ -135,9 +139,14 @@ class HigherLower {
   displayCard(cardEl, card) {
     const rankEl = cardEl.querySelector('.higher-lower-card-rank');
     const suitEl = cardEl.querySelector('.higher-lower-card-suit');
+    const frontEl = cardEl.querySelector('.higher-lower-card-front');
 
     if (rankEl) rankEl.textContent = card.rank;
     if (suitEl) suitEl.textContent = card.suit;
+    if (frontEl) {
+      const isRed = card.suit === '♥' || card.suit === '♦';
+      frontEl.style.color = isRed ? '#e32636' : '#333';
+    }
   }
 
   start() {
@@ -168,6 +177,8 @@ class HigherLower {
     // Reset card transforms
     this.currentCardEl.classList.remove('flipped');
     this.nextCardEl.classList.remove('flipped', 'correct', 'incorrect');
+    this.currentCardEl.style.transform = '';
+    this.nextCardEl.style.transform = '';
 
     this.updateUI();
   }
@@ -213,10 +224,6 @@ class HigherLower {
           const frontEl = this.nextCardEl.querySelector('.higher-lower-card-front');
           if (backEl) backEl.style.display = 'block';
           if (frontEl) frontEl.style.display = 'none';
-
-          // Move current card
-          this.currentCardEl.style.transform = 'translateX(-120px)';
-          this.nextCardEl.style.transform = 'translateX(-120px)';
 
           // Update current card display
           this.displayCard(this.currentCardEl, this.currentCard);
@@ -286,15 +293,14 @@ class HigherLower {
   }
 
   destroy() {
-    // Remove event listeners
-    if (this.higherBtn) {
-      this.higherBtn.removeEventListener('click', () => {});
+    if (this.higherBtn && this._handleHigher) {
+      this.higherBtn.removeEventListener('click', this._handleHigher);
     }
-    if (this.lowerBtn) {
-      this.lowerBtn.removeEventListener('click', () => {});
+    if (this.lowerBtn && this._handleLower) {
+      this.lowerBtn.removeEventListener('click', this._handleLower);
     }
-    if (this.playAgainBtn) {
-      this.playAgainBtn.removeEventListener('click', () => {});
+    if (this.playAgainBtn && this._handlePlayAgain) {
+      this.playAgainBtn.removeEventListener('click', this._handlePlayAgain);
     }
 
     // Clear container

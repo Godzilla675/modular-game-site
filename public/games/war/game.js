@@ -135,19 +135,17 @@ class War {
    * Setup event listeners
    */
   setupEventListeners() {
-    this.elements.flipBtn.addEventListener('click', () => {
+    this._handleFlip = () => {
       if (this.gameState === 'playing') {
         this.playRound();
       }
-    });
+    };
+    this._handleAuto = () => this.toggleAutoPlay();
+    this._handleReset = () => this.start();
 
-    this.elements.autoBtn.addEventListener('click', () => {
-      this.toggleAutoPlay();
-    });
-
-    this.elements.resetBtn.addEventListener('click', () => {
-      this.start();
-    });
+    this.elements.flipBtn.addEventListener('click', this._handleFlip);
+    this.elements.autoBtn.addEventListener('click', this._handleAuto);
+    this.elements.resetBtn.addEventListener('click', this._handleReset);
   }
 
   /**
@@ -528,14 +526,14 @@ class War {
     }
 
     // Remove event listeners
-    if (this.elements.flipBtn) {
-      this.elements.flipBtn.removeEventListener('click', null);
+    if (this.elements.flipBtn && this._handleFlip) {
+      this.elements.flipBtn.removeEventListener('click', this._handleFlip);
     }
-    if (this.elements.autoBtn) {
-      this.elements.autoBtn.removeEventListener('click', null);
+    if (this.elements.autoBtn && this._handleAuto) {
+      this.elements.autoBtn.removeEventListener('click', this._handleAuto);
     }
-    if (this.elements.resetBtn) {
-      this.elements.resetBtn.removeEventListener('click', null);
+    if (this.elements.resetBtn && this._handleReset) {
+      this.elements.resetBtn.removeEventListener('click', this._handleReset);
     }
 
     // Clear DOM
