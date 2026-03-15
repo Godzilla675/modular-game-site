@@ -6,6 +6,7 @@ class Galaga {
     this.gameRunning = false;
     this.gamePaused = false;
     this.gameOver = false;
+    this.animationFrameId = null;
     
     // Game state
     this.score = 0;
@@ -59,7 +60,7 @@ class Galaga {
     this.canvas = document.createElement('canvas');
     this.canvas.width = this.width;
     this.canvas.height = this.height;
-    this.canvas.className = 'galaga-game-canvas';
+    this.canvas.className = 'galaga-game-canvas game-canvas';
     this.ctx = this.canvas.getContext('2d');
     
     // Create UI container
@@ -180,7 +181,7 @@ class Galaga {
   setupKeyboardControls() {
     this.keyState = {};
     
-    document.addEventListener('keydown', (e) => {
+    this._handleKeyDown = (e) => {
       this.keyState[e.key.toLowerCase()] = true;
       
       if (e.key === ' ') {
@@ -194,14 +195,21 @@ class Galaga {
           else this.pause();
         }
       }
-    });
+    };
     
-    document.addEventListener('keyup', (e) => {
+    this._handleKeyUp = (e) => {
       this.keyState[e.key.toLowerCase()] = false;
-    });
+    };
+    
+    document.addEventListener('keydown', this._handleKeyDown);
+    document.addEventListener('keyup', this._handleKeyUp);
   }
 
   start() {
+    if (this.animationFrameId) {
+      cancelAnimationFrame(this.animationFrameId);
+      this.animationFrameId = null;
+    }
     this.score = 0;
     this.lives = 3;
     this.wave = 1;
@@ -238,7 +246,7 @@ class Galaga {
     
     for (let row = 0; row < rows; row++) {
       for (let col = 0; col < cols; col++) {
-        const isBoss = row === 0 && col === 2 || col === 3; // Boss enemies in front row
+        const isBoss = row === 0 && (col === 2 || col === 3); // Boss enemies in front row
         this.enemies.push({
           x: col * spacing + 50,
           y: row * spacing + this.formationY,
@@ -279,13 +287,18 @@ class Galaga {
     }
     
     this.render();
-    requestAnimationFrame(() => this.gameLoop());
+    this.animationFrameId = requestAnimationFrame(() => this.gameLoop());
   }
 
   update() {
-    // Update player
-    this.player.x += this.keyState['arrowleft'] ? -this.player.speed : 0;
-    this.player.x += this.keyState['arrowright'] ? this.player.speed : 0;
+    // Update player (keyboard + mobile button dx)
+    if (this.keyState['arrowleft'] || this.keyState['a']) {
+      this.player.x -= this.player.speed;
+    }
+    if (this.keyState['arrowright'] || this.keyState['d']) {
+      this.player.x += this.player.speed;
+    }
+    this.player.x += this.player.dx;
     this.player.x = Math.max(0, Math.min(this.width - this.player.width, this.player.x));
     
     // Update starfield
@@ -302,19 +315,21 @@ class Galaga {
     const swayAmount = Math.sin(this.formationSway) * 15;
     
     // Update enemies in formation
-    this.enemies.forEach((enemy, idx) => {
+    this.enemies.forEach((enemy) => {
       if (!enemy.isDiving) {
-        // Formation movement
         enemy.x = enemy.baseX + this.formationX + swayAmount;
         enemy.y = enemy.baseY + this.formationY;
-        
-        // Boundary bounce
-        if (this.formationX > 100 || this.formationX < -100) {
-          this.formationDirection *= -1;
-          this.formationY += 40;
-        }
       }
     });
+    
+    // Boundary bounce (once per frame, using explicit direction to prevent oscillation)
+    if (this.formationX > 100 && this.formationDirection === 1) {
+      this.formationDirection = -1;
+      this.formationY += 40;
+    } else if (this.formationX < -100 && this.formationDirection === -1) {
+      this.formationDirection = 1;
+      this.formationY += 40;
+    }
     
     // Move formation
     this.formationX += this.formationDirection * this.formationSpeed;
@@ -362,14 +377,13 @@ class Galaga {
     });
     
     // Update bullets
-    this.bullets.forEach((bullet, idx) => {
+    this.bullets = this.bullets.filter(bullet => {
       bullet.y -= bullet.speed;
-      
-      // Remove if off screen
       if (bullet.y < 0) {
-        this.bullets.splice(idx, 1);
         this.player.bullets--;
+        return false;
       }
+      return true;
     });
     
     // Enemy fire
@@ -389,16 +403,19 @@ class Galaga {
     }
     
     // Update enemy bullets
-    this.enemyBullets.forEach((bullet, idx) => {
+    this.enemyBullets = this.enemyBullets.filter(bullet => {
       bullet.y += bullet.speed;
-      if (bullet.y > this.height) {
-        this.enemyBullets.splice(idx, 1);
-      }
+      return bullet.y <= this.height;
     });
     
-    // Collision detection: player bullets vs enemies
+    // Collision detection: player bullets vs enemies (mark-and-sweep to avoid splice-during-iteration)
+    const bulletsToRemove = new Set();
+    const enemiesToRemove = new Set();
+    
     this.bullets.forEach((bullet, bIdx) => {
+      if (bulletsToRemove.has(bIdx)) return;
       this.enemies.forEach((enemy, eIdx) => {
+        if (bulletsToRemove.has(bIdx) || enemiesToRemove.has(eIdx)) return;
         if (this.isColliding(bullet, enemy)) {
           enemy.health--;
           this.explosions.push({
@@ -409,7 +426,6 @@ class Galaga {
           });
           
           if (enemy.health <= 0) {
-            // Score based on enemy type and whether diving
             if (enemy.isDiving) {
               this.score += 150;
             } else if (enemy.isBoss) {
@@ -417,25 +433,30 @@ class Galaga {
             } else {
               this.score += 50 + Math.floor(Math.random() * 50);
             }
-            
-            this.enemies.splice(eIdx, 1);
-            if (this.divingEnemies.has(eIdx)) {
-              this.divingEnemies.delete(eIdx);
-            }
+            enemiesToRemove.add(eIdx);
           }
           
-          // Remove bullet
-          this.bullets.splice(bIdx, 1);
+          bulletsToRemove.add(bIdx);
           this.player.bullets--;
         }
       });
     });
     
+    // Remove in reverse index order to preserve indices
+    [...enemiesToRemove].sort((a, b) => b - a).forEach(idx => {
+      if (this.divingEnemies.has(idx)) {
+        this.divingEnemies.delete(idx);
+      }
+      this.enemies.splice(idx, 1);
+    });
+    [...bulletsToRemove].sort((a, b) => b - a).forEach(idx => {
+      this.bullets.splice(idx, 1);
+    });
+    
     // Collision detection: enemy bullets vs player
-    this.enemyBullets.forEach((bullet, idx) => {
+    this.enemyBullets = this.enemyBullets.filter(bullet => {
       if (this.isColliding(bullet, this.player)) {
         this.lives--;
-        this.enemyBullets.splice(idx, 1);
         this.explosions.push({
           x: this.player.x + this.player.width / 2,
           y: this.player.y + this.player.height / 2,
@@ -447,15 +468,15 @@ class Galaga {
           this.gameOver = true;
           this.gameRunning = false;
         }
+        return false;
       }
+      return true;
     });
     
     // Update explosions
-    this.explosions.forEach((exp, idx) => {
+    this.explosions = this.explosions.filter(exp => {
       exp.life--;
-      if (exp.life <= 0) {
-        this.explosions.splice(idx, 1);
-      }
+      return exp.life > 0;
     });
     
     // Wave complete
@@ -576,8 +597,16 @@ class Galaga {
 
   destroy() {
     this.gameRunning = false;
-    document.removeEventListener('keydown', null);
-    document.removeEventListener('keyup', null);
+    if (this.animationFrameId) {
+      cancelAnimationFrame(this.animationFrameId);
+      this.animationFrameId = null;
+    }
+    if (this._handleKeyDown) {
+      document.removeEventListener('keydown', this._handleKeyDown);
+    }
+    if (this._handleKeyUp) {
+      document.removeEventListener('keyup', this._handleKeyUp);
+    }
     if (this.container) {
       this.container.innerHTML = '';
     }

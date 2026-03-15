@@ -38,7 +38,7 @@ class CaveDash {
   setupCanvas() {
     // Create canvas element
     this.canvas = document.createElement('canvas');
-    this.canvas.className = 'cave-dash-game-canvas';
+    this.canvas.className = 'cave-dash-game-canvas game-canvas';
     this.canvas.width = 700;
     this.canvas.height = 400;
 
@@ -56,10 +56,10 @@ class CaveDash {
     this.keyDownHandler = (e) => {
       if (e.code === 'Space') {
         e.preventDefault();
-        this.isFlying = true;
         if (this.gameState === 'idle') {
           this.start();
         }
+        this.isFlying = true;
       }
     };
 
@@ -72,10 +72,10 @@ class CaveDash {
 
     // Mouse/Touch controls
     this.mouseDownHandler = () => {
-      this.isFlying = true;
       if (this.gameState === 'idle') {
         this.start();
       }
+      this.isFlying = true;
     };
 
     this.mouseUpHandler = () => {
@@ -84,10 +84,10 @@ class CaveDash {
 
     this.touchStartHandler = (e) => {
       e.preventDefault();
-      this.isFlying = true;
       if (this.gameState === 'idle') {
         this.start();
       }
+      this.isFlying = true;
     };
 
     this.touchEndHandler = (e) => {
@@ -134,7 +134,7 @@ class CaveDash {
 
     // Generate initial cave segments
     for (let i = 0; i < 50; i++) {
-      this.generateCaveSegment(i);
+      this.generateCaveSegment();
     }
 
     // Hide overlay if it exists
@@ -189,10 +189,10 @@ class CaveDash {
     return this.score;
   }
 
-  generateCaveSegment(index) {
+  generateCaveSegment() {
     const segmentWidth = 40;
-    const x = index * segmentWidth;
     const lastSegment = this.cave.segments[this.cave.segments.length - 1];
+    const x = lastSegment ? lastSegment.x + segmentWidth : 0;
 
     let gapCenter, gapWidth;
 
@@ -253,6 +253,9 @@ class CaveDash {
 
     this.player.y += this.player.velocityY;
 
+    // Move player forward
+    this.player.x += this.gameSpeed;
+
     // Store trail
     this.player.trail.push({
       x: this.player.x,
@@ -291,8 +294,8 @@ class CaveDash {
       this.cave.segments.shift();
     }
 
-    while (this.cave.segments[this.cave.segments.length - 1].x < this.player.x + 400) {
-      this.generateCaveSegment(this.cave.segments.length);
+    while (this.cave.segments.length > 0 && this.cave.segments[this.cave.segments.length - 1].x < this.player.x + 400) {
+      this.generateCaveSegment();
     }
 
     // Update distance and score

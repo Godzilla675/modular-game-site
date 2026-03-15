@@ -44,7 +44,7 @@ class DuckHunt {
   init() {
     // Create canvas
     this.canvas = document.createElement('canvas');
-    this.canvas.className = 'duck-hunt-game-canvas';
+    this.canvas.className = 'duck-hunt-game-canvas game-canvas';
     this.canvas.width = this.canvasWidth;
     this.canvas.height = this.canvasHeight;
     this.ctx = this.canvas.getContext('2d');
@@ -92,12 +92,11 @@ class DuckHunt {
   }
   
   start() {
-    if (this.gameState === 'menu' || this.gameState === 'gameOver') {
-      this.reset();
-      this.gameState = 'playing';
-      this.nextRound();
-      this.animate();
-    }
+    this.reset();
+    this.gameState = 'playing';
+    this.gameOverScreen.style.display = 'none';
+    this.nextRound();
+    this.animate();
   }
   
   pause() {
@@ -120,6 +119,14 @@ class DuckHunt {
     if (this.animationFrameId) {
       cancelAnimationFrame(this.animationFrameId);
     }
+    if (this._roundEndTimeout) {
+      clearTimeout(this._roundEndTimeout);
+      this._roundEndTimeout = null;
+    }
+    if (this._spawnTimeout) {
+      clearTimeout(this._spawnTimeout);
+      this._spawnTimeout = null;
+    }
     this.canvas.removeEventListener('click', this.handleClick);
     this.canvas.removeEventListener('touchend', this.handleTouchEnd);
     this.ducks = [];
@@ -137,6 +144,18 @@ class DuckHunt {
   }
   
   reset() {
+    if (this.animationFrameId) {
+      cancelAnimationFrame(this.animationFrameId);
+      this.animationFrameId = null;
+    }
+    if (this._roundEndTimeout) {
+      clearTimeout(this._roundEndTimeout);
+      this._roundEndTimeout = null;
+    }
+    if (this._spawnTimeout) {
+      clearTimeout(this._spawnTimeout);
+      this._spawnTimeout = null;
+    }
     this.score = 0;
     this.round = 0;
     this.level = 1;
@@ -146,6 +165,7 @@ class DuckHunt {
     this.missesRemaining = this.maxMisses;
     this.ducksHit = 0;
     this.ducksMissed = 0;
+    this._ducksSpawned = false;
     this.updateUI();
   }
   
@@ -163,9 +183,12 @@ class DuckHunt {
     this.totalDucksInRound = Math.min(1 + Math.floor((this.level - 1) / 2), 3);
     
     // Spawn ducks with slight delay
-    setTimeout(() => {
+    this._ducksSpawned = false;
+    this._spawnTimeout = setTimeout(() => {
+      this._spawnTimeout = null;
       if (this.gameState === 'playing') {
         this.spawnDucks(this.totalDucksInRound);
+        this._ducksSpawned = true;
       }
     }, 500);
     
@@ -253,13 +276,28 @@ class DuckHunt {
       }
     }
     
-    // Check if round is over
-    if (this.ammo === 0) {
-      setTimeout(() => {
+    // If all ducks in this round are hit, advance immediately
+    const allDucksHit = this.ducks.length > 0 && this.ducks.every(d => d.hit);
+    if (allDucksHit && !this._roundEndTimeout) {
+      this._roundEndTimeout = setTimeout(() => {
+        this._roundEndTimeout = null;
         if (this.gameState === 'playing') {
-          // Combo bonus
+          this.score += 25; // Perfect round bonus
+          this.ducks = [];
+          this.nextRound();
+        }
+      }, 800);
+      this.updateUI();
+      return;
+    }
+    
+    // Check if round is over (out of ammo)
+    if (this.ammo === 0 && !this._roundEndTimeout) {
+      this._roundEndTimeout = setTimeout(() => {
+        this._roundEndTimeout = null;
+        if (this.gameState === 'playing') {
           if (this.ducksHitThisRound === this.totalDucksInRound && this.ducksHitThisRound > 0) {
-            this.score += 25; // Bonus for hitting all ducks
+            this.score += 25;
           }
           
           if (this.missesRemaining <= 0) {
@@ -350,13 +388,34 @@ class DuckHunt {
       }
     }
     
-    // Remove off-screen ducks
+    // Remove off-screen ducks (count escaped unhit ducks as missed)
     this.ducks = this.ducks.filter(duck => {
-      if (duck.x > this.canvasWidth + 50 || duck.x < -50 || duck.y > this.canvasHeight + 50) {
+      const offScreen = duck.x > this.canvasWidth + 50 || duck.x < -50 || duck.y > this.canvasHeight + 50;
+      if (offScreen) {
+        if (!duck.hit) {
+          this.ducksMissed++;
+        }
         return false;
       }
       return true;
     });
+    
+    // If all ducks are gone and some were spawned, advance round
+    if (this.ducks.length === 0 && this._ducksSpawned && !this._roundEndTimeout) {
+      this._roundEndTimeout = setTimeout(() => {
+        this._roundEndTimeout = null;
+        if (this.gameState === 'playing') {
+          if (this.ducksHitThisRound === this.totalDucksInRound && this.ducksHitThisRound > 0) {
+            this.score += 25;
+          }
+          if (this.missesRemaining <= 0) {
+            this.endGame();
+          } else {
+            this.nextRound();
+          }
+        }
+      }, 500);
+    }
     
     // Update particles
     this.particles = this.particles.filter(p => {
