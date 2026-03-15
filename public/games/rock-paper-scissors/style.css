@@ -1,0 +1,353 @@
+/* Rock Paper Scissors — scoped styles */
+
+.rock-paper-scissors-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 18px 10px 10px;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  color: var(--text-primary, #e8e4d9);
+  user-select: none;
+}
+
+/* ── Mode selector ──────────────────────────── */
+.rock-paper-scissors-mode {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.rock-paper-scissors-mode-btn {
+  background: var(--bg-card, #22223a);
+  color: var(--text-secondary, #9a9ab0);
+  border: 2px solid transparent;
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.rock-paper-scissors-mode-btn:hover {
+  color: var(--text-primary, #e8e4d9);
+  border-color: var(--text-accent, #f0c850);
+}
+
+.rock-paper-scissors-mode-btn.active {
+  background: var(--text-accent, #f0c850);
+  color: #1a1a2e;
+  border-color: var(--text-accent, #f0c850);
+}
+
+/* ── Scoreboard ─────────────────────────────── */
+.rock-paper-scissors-scoreboard {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 14px;
+  font-size: 0.95rem;
+}
+
+.rock-paper-scissors-stat {
+  text-align: center;
+}
+
+.rock-paper-scissors-stat-label {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-secondary, #9a9ab0);
+  margin-bottom: 2px;
+}
+
+.rock-paper-scissors-stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.rock-paper-scissors-stat-value.wins   { color: #4caf50; }
+.rock-paper-scissors-stat-value.losses { color: #e63946; }
+.rock-paper-scissors-stat-value.draws  { color: #f0c850; }
+
+/* ── Series progress ────────────────────────── */
+.rock-paper-scissors-series {
+  font-size: 0.8rem;
+  color: var(--text-secondary, #9a9ab0);
+  margin-bottom: 10px;
+  text-align: center;
+  min-height: 20px;
+}
+
+.rock-paper-scissors-series-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.rock-paper-scissors-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--bg-card, #22223a);
+  border: 2px solid var(--text-secondary, #9a9ab0);
+  transition: all 0.3s ease;
+}
+
+.rock-paper-scissors-dot.win  { background: #4caf50; border-color: #4caf50; }
+.rock-paper-scissors-dot.lose { background: #e63946; border-color: #e63946; }
+.rock-paper-scissors-dot.draw { background: #f0c850; border-color: #f0c850; }
+
+/* ── Arena area ─────────────────────────────── */
+.rock-paper-scissors-arena {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 16px;
+  min-height: 120px;
+}
+
+.rock-paper-scissors-player,
+.rock-paper-scissors-ai {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.rock-paper-scissors-arena-emoji {
+  font-size: 3.2rem;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-card, #22223a);
+  border-radius: 16px;
+  border: 3px solid transparent;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.rock-paper-scissors-arena-emoji.win  { border-color: #4caf50; }
+.rock-paper-scissors-arena-emoji.lose { border-color: #e63946; }
+.rock-paper-scissors-arena-emoji.draw { border-color: #f0c850; }
+
+.rock-paper-scissors-arena-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-secondary, #9a9ab0);
+}
+
+.rock-paper-scissors-vs {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text-secondary, #9a9ab0);
+}
+
+/* shake / countdown animation */
+@keyframes rock-paper-scissors-shake {
+  0%, 100% { transform: translateY(0); }
+  25%      { transform: translateY(-12px); }
+  50%      { transform: translateY(4px); }
+  75%      { transform: translateY(-6px); }
+}
+
+.rock-paper-scissors-arena-emoji.shaking {
+  animation: rock-paper-scissors-shake 0.4s ease infinite;
+}
+
+.rock-paper-scissors-countdown {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--text-accent, #f0c850);
+  animation: rock-paper-scissors-pop 0.35s ease;
+}
+
+@keyframes rock-paper-scissors-pop {
+  0%   { transform: scale(1.8); opacity: 0; }
+  60%  { transform: scale(0.9); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+/* ── Result text ────────────────────────────── */
+.rock-paper-scissors-result {
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-align: center;
+  min-height: 36px;
+  margin-bottom: 8px;
+  animation: rock-paper-scissors-pop 0.35s ease;
+}
+
+.rock-paper-scissors-result.win  { color: #4caf50; }
+.rock-paper-scissors-result.lose { color: #e63946; }
+.rock-paper-scissors-result.draw { color: #f0c850; }
+
+/* ── Streak ──────────────────────────────────── */
+.rock-paper-scissors-streak {
+  font-size: 0.8rem;
+  color: var(--text-secondary, #9a9ab0);
+  text-align: center;
+  min-height: 18px;
+  margin-bottom: 12px;
+}
+
+.rock-paper-scissors-streak.hot {
+  color: #ff9800;
+  font-weight: 700;
+}
+
+/* ── Choice buttons ──────────────────────────── */
+.rock-paper-scissors-choices {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.rock-paper-scissors-choice-btn {
+  font-size: 2.6rem;
+  width: 90px;
+  height: 90px;
+  border: 3px solid var(--bg-card, #22223a);
+  border-radius: 20px;
+  background: var(--bg-card, #22223a);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.rock-paper-scissors-choice-btn:hover {
+  transform: translateY(-6px) scale(1.08);
+  border-color: var(--text-accent, #f0c850);
+  box-shadow: 0 8px 24px rgba(240, 200, 80, 0.18);
+}
+
+.rock-paper-scissors-choice-btn:active {
+  transform: translateY(0) scale(0.95);
+}
+
+.rock-paper-scissors-choice-btn.disabled {
+  pointer-events: none;
+  opacity: 0.45;
+}
+
+/* ── History ──────────────────────────────────── */
+.rock-paper-scissors-history {
+  width: 100%;
+  max-width: 380px;
+}
+
+.rock-paper-scissors-history-title {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-secondary, #9a9ab0);
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.rock-paper-scissors-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 150px;
+  overflow-y: auto;
+  padding: 0 4px;
+}
+
+.rock-paper-scissors-history-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: var(--bg-card, #22223a);
+  animation: rock-paper-scissors-slide-in 0.25s ease;
+}
+
+@keyframes rock-paper-scissors-slide-in {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.rock-paper-scissors-history-result {
+  font-weight: 700;
+  min-width: 40px;
+  text-align: right;
+}
+
+.rock-paper-scissors-history-result.win  { color: #4caf50; }
+.rock-paper-scissors-history-result.lose { color: #e63946; }
+.rock-paper-scissors-history-result.draw { color: #f0c850; }
+
+/* ── Series winner banner ───────────────────── */
+.rock-paper-scissors-banner {
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 10px 20px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  animation: rock-paper-scissors-pop 0.4s ease;
+}
+
+.rock-paper-scissors-banner.win {
+  background: rgba(76, 175, 80, 0.15);
+  color: #4caf50;
+  border: 2px solid #4caf50;
+}
+
+.rock-paper-scissors-banner.lose {
+  background: rgba(230, 57, 70, 0.15);
+  color: #e63946;
+  border: 2px solid #e63946;
+}
+
+/* ── New series button ──────────────────────── */
+.rock-paper-scissors-new-series-btn {
+  background: var(--text-accent, #f0c850);
+  color: #1a1a2e;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 28px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+  margin-bottom: 12px;
+}
+
+.rock-paper-scissors-new-series-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 18px rgba(240, 200, 80, 0.3);
+}
+
+/* ── Responsive ──────────────────────────────── */
+@media (max-width: 480px) {
+  .rock-paper-scissors-choice-btn {
+    width: 74px;
+    height: 74px;
+    font-size: 2.1rem;
+  }
+
+  .rock-paper-scissors-arena-emoji {
+    font-size: 2.4rem;
+    width: 64px;
+    height: 64px;
+  }
+
+  .rock-paper-scissors-scoreboard {
+    gap: 16px;
+  }
+}

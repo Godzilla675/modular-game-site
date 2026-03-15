@@ -532,6 +532,13 @@ body::before {
   width: 100%;
 }
 
+.game-container canvas {
+  display: block;
+  margin: 0 auto;
+  width: auto;
+  max-width: 100%;
+}
+
 .game-score-bar {
   max-width: 900px;
   margin: 16px auto;

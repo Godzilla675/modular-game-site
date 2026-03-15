@@ -1,0 +1,196 @@
+.maze-runner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  color: #e0e0e0;
+  user-select: none;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.maze-runner-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 8px 4px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.maze-runner-stats {
+  display: flex;
+  gap: 18px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.maze-runner-stat {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.maze-runner-stat-label {
+  color: #999;
+  font-weight: 400;
+  font-size: 0.85rem;
+}
+
+.maze-runner-stat-value {
+  color: #ffd369;
+  font-variant-numeric: tabular-nums;
+}
+
+.maze-runner-controls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.maze-runner-btn {
+  padding: 6px 16px;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: #2a2a2a;
+  color: #e0e0e0;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.maze-runner-btn:hover {
+  background: #3a3a3a;
+  border-color: #777;
+}
+
+.maze-runner-btn-active {
+  background: #3d5a80;
+  border-color: #5a8abf;
+  color: #fff;
+}
+
+.maze-runner-select {
+  padding: 6px 10px;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: #2a2a2a;
+  color: #e0e0e0;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.maze-runner-select:focus {
+  outline: none;
+  border-color: #5a8abf;
+}
+
+.maze-runner-canvas-wrap {
+  position: relative;
+  border: 2px solid #444;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #1a1a2e;
+}
+
+.maze-runner-canvas-wrap canvas.game-canvas {
+  display: block;
+}
+
+.maze-runner-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(10, 10, 30, 0.88);
+  z-index: 10;
+  gap: 14px;
+}
+
+.maze-runner-overlay-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ffd369;
+}
+
+.maze-runner-overlay-sub {
+  font-size: 1rem;
+  color: #ccc;
+}
+
+.maze-runner-overlay-score {
+  font-size: 1.2rem;
+  color: #7ec8e3;
+  font-weight: 600;
+}
+
+.maze-runner-overlay .maze-runner-btn {
+  margin-top: 6px;
+  padding: 8px 28px;
+  font-size: 1rem;
+  background: #3d5a80;
+  border-color: #5a8abf;
+}
+
+.maze-runner-overlay .maze-runner-btn:hover {
+  background: #4a6fa5;
+}
+
+.maze-runner-footer {
+  font-size: 0.78rem;
+  color: #666;
+  text-align: center;
+}
+
+.maze-runner-mobile-dpad {
+  display: none;
+  grid-template-columns: repeat(3, 52px);
+  grid-template-rows: repeat(3, 52px);
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.maze-runner-dpad-btn {
+  width: 52px;
+  height: 52px;
+  border: 1px solid #555;
+  border-radius: 8px;
+  background: #2a2a2a;
+  color: #e0e0e0;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.maze-runner-dpad-btn:active {
+  background: #3d5a80;
+}
+
+.maze-runner-dpad-blank {
+  visibility: hidden;
+}
+
+@media (pointer: coarse) {
+  .maze-runner-mobile-dpad {
+    display: grid;
+  }
+}
+
+@media (max-width: 500px) {
+  .maze-runner-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .maze-runner-mobile-dpad {
+    display: grid;
+  }
+}

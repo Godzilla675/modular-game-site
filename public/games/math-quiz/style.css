@@ -1,0 +1,302 @@
+/* Math Quiz — scoped styles */
+
+.math-quiz-container {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 24px;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: #1e293b;
+  user-select: none;
+}
+
+/* ---------- Start / Game-over screens ---------- */
+
+.math-quiz-start-screen,
+.math-quiz-gameover-screen {
+  text-align: center;
+  padding: 48px 24px;
+}
+
+.math-quiz-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: #1e40af;
+}
+
+.math-quiz-subtitle {
+  font-size: 1rem;
+  color: #64748b;
+  margin: 0 0 32px;
+}
+
+.math-quiz-difficulty-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #475569;
+  margin-bottom: 12px;
+}
+
+.math-quiz-difficulty-options {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.math-quiz-diff-btn {
+  padding: 10px 22px;
+  border: 2px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  color: #334155;
+}
+
+.math-quiz-diff-btn:hover {
+  border-color: #3b82f6;
+  color: #1e40af;
+}
+
+.math-quiz-diff-btn.math-quiz-selected {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: #fff;
+}
+
+.math-quiz-start-btn,
+.math-quiz-restart-btn {
+  display: inline-block;
+  padding: 14px 48px;
+  border: none;
+  border-radius: 10px;
+  background: #3b82f6;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.math-quiz-start-btn:hover,
+.math-quiz-restart-btn:hover {
+  background: #2563eb;
+}
+
+.math-quiz-start-btn:active,
+.math-quiz-restart-btn:active {
+  transform: scale(0.97);
+}
+
+/* ---------- HUD (top bar) ---------- */
+
+.math-quiz-hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.math-quiz-hud-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.math-quiz-hud-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #94a3b8;
+}
+
+.math-quiz-hud-value {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.math-quiz-streak-value {
+  color: #f59e0b;
+}
+
+/* ---------- Timer bar ---------- */
+
+.math-quiz-timer-track {
+  width: 100%;
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.math-quiz-timer-bar {
+  height: 100%;
+  background: #3b82f6;
+  border-radius: 4px;
+  transition: width 0.25s linear, background 0.3s ease;
+}
+
+.math-quiz-timer-bar.math-quiz-warning {
+  background: #f59e0b;
+}
+
+.math-quiz-timer-bar.math-quiz-danger {
+  background: #ef4444;
+}
+
+/* ---------- Question card ---------- */
+
+.math-quiz-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 36px 28px 28px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  margin-bottom: 20px;
+}
+
+.math-quiz-question-number {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 12px;
+}
+
+.math-quiz-question-text {
+  font-size: 2rem;
+  font-weight: 800;
+  text-align: center;
+  margin: 0 0 28px;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+/* ---------- Answer grid ---------- */
+
+.math-quiz-answers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.math-quiz-answer-btn {
+  padding: 16px 12px;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  background: #f8fafc;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.math-quiz-answer-btn:hover:not(:disabled) {
+  border-color: #3b82f6;
+  background: #eff6ff;
+  color: #1e40af;
+}
+
+.math-quiz-answer-btn:disabled {
+  cursor: default;
+}
+
+.math-quiz-answer-btn.math-quiz-correct {
+  border-color: #22c55e;
+  background: #dcfce7;
+  color: #166534;
+}
+
+.math-quiz-answer-btn.math-quiz-wrong {
+  border-color: #ef4444;
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* ---------- Feedback ---------- */
+
+.math-quiz-feedback {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 700;
+  min-height: 28px;
+  margin-top: 8px;
+}
+
+.math-quiz-feedback.math-quiz-fb-correct {
+  color: #16a34a;
+}
+
+.math-quiz-feedback.math-quiz-fb-wrong {
+  color: #dc2626;
+}
+
+.math-quiz-feedback.math-quiz-fb-timeout {
+  color: #d97706;
+}
+
+/* ---------- Paused overlay ---------- */
+
+.math-quiz-paused-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  z-index: 10;
+}
+
+.math-quiz-paused-text {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ---------- Game-over screen extras ---------- */
+
+.math-quiz-final-score {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #3b82f6;
+  margin: 4px 0 4px;
+}
+
+.math-quiz-final-detail {
+  font-size: 0.95rem;
+  color: #64748b;
+  margin: 4px 0;
+}
+
+.math-quiz-final-detail span {
+  font-weight: 700;
+  color: #334155;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 480px) {
+  .math-quiz-container {
+    padding: 12px;
+  }
+  .math-quiz-question-text {
+    font-size: 1.5rem;
+  }
+  .math-quiz-answers {
+    grid-template-columns: 1fr;
+  }
+}

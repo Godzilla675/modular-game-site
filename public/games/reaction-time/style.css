@@ -1,0 +1,264 @@
+.reaction-time-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  overflow: hidden;
+  user-select: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  border-radius: 12px;
+}
+
+/* Phase backgrounds */
+.reaction-time-container.reaction-time-waiting {
+  background-color: #c0392b;
+}
+
+.reaction-time-container.reaction-time-ready {
+  background-color: #27ae60;
+}
+
+.reaction-time-container.reaction-time-early {
+  background-color: #e67e22;
+}
+
+.reaction-time-container.reaction-time-result {
+  background-color: #2c3e50;
+}
+
+.reaction-time-container.reaction-time-finished {
+  background-color: #1a1a2e;
+}
+
+.reaction-time-container.reaction-time-idle {
+  background-color: #2c3e50;
+}
+
+.reaction-time-container.reaction-time-paused {
+  background-color: #34495e;
+}
+
+/* Main instruction text */
+.reaction-time-message {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+.reaction-time-submessage {
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  color: rgba(255, 255, 255, 0.85);
+  text-align: center;
+  margin-bottom: 1.5em;
+}
+
+/* Round indicator */
+.reaction-time-round-indicator {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(0, 0, 0, 0.2);
+  padding: 6px 16px;
+  border-radius: 20px;
+}
+
+/* Reaction time display */
+.reaction-time-time-display {
+  font-size: clamp(3rem, 8vw, 5rem);
+  font-weight: 800;
+  color: #fff;
+  margin: 0.2em 0;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.reaction-time-time-unit {
+  font-size: 0.4em;
+  font-weight: 400;
+  opacity: 0.8;
+  margin-left: 4px;
+}
+
+/* History bar */
+.reaction-time-history {
+  display: flex;
+  gap: 10px;
+  margin-top: 1.5em;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0 20px;
+}
+
+.reaction-time-history-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.reaction-time-history-dot {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  transition: transform 0.2s ease;
+}
+
+.reaction-time-history-dot.reaction-time-fast {
+  background: #27ae60;
+}
+
+.reaction-time-history-dot.reaction-time-medium {
+  background: #f39c12;
+}
+
+.reaction-time-history-dot.reaction-time-slow {
+  background: #e74c3c;
+}
+
+.reaction-time-history-dot.reaction-time-pending {
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+}
+
+.reaction-time-history-label {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Final results */
+.reaction-time-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 500px;
+  padding: 0 20px;
+}
+
+.reaction-time-results-title {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.3em;
+}
+
+.reaction-time-results-avg {
+  font-size: clamp(3rem, 7vw, 4.5rem);
+  font-weight: 800;
+  color: #3498db;
+  text-shadow: 0 0 30px rgba(52, 152, 219, 0.4);
+}
+
+.reaction-time-results-score {
+  font-size: 1.3rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 0.2em;
+}
+
+.reaction-time-results-breakdown {
+  display: flex;
+  gap: 16px;
+  margin-top: 1em;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.reaction-time-results-round {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 8px 14px;
+  border-radius: 8px;
+}
+
+.reaction-time-results-round-label {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 2px;
+}
+
+.reaction-time-results-round-time {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* Start / Play Again button */
+.reaction-time-btn {
+  margin-top: 1.5em;
+  padding: 14px 40px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  backdrop-filter: blur(4px);
+}
+
+.reaction-time-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+}
+
+.reaction-time-btn:active {
+  transform: scale(0.97);
+}
+
+/* Pulse animation for "Click NOW!" */
+@keyframes reaction-time-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.reaction-time-container.reaction-time-ready .reaction-time-message {
+  animation: reaction-time-pulse 0.6s ease-in-out infinite;
+}
+
+/* Fade-in for results */
+@keyframes reaction-time-fade-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.reaction-time-results {
+  animation: reaction-time-fade-in 0.5s ease-out;
+}
+
+.reaction-time-paused-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  border-radius: 12px;
+}
+
+.reaction-time-paused-text {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}

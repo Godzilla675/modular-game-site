@@ -1,0 +1,327 @@
+/* Number Guessing Game — all styles scoped with .number-guessing- prefix */
+
+.number-guessing-container {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 24px;
+  color: #e0e0e0;
+  user-select: none;
+}
+
+/* ── Title ── */
+.number-guessing-title {
+  text-align: center;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 20px;
+  color: #ffffff;
+}
+
+/* ── Difficulty selector ── */
+.number-guessing-difficulty {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.number-guessing-diff-btn {
+  padding: 8px 20px;
+  border: 2px solid #555;
+  border-radius: 8px;
+  background: transparent;
+  color: #ccc;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.number-guessing-diff-btn:hover {
+  border-color: #888;
+  color: #fff;
+}
+
+.number-guessing-diff-btn.active {
+  border-color: #6c63ff;
+  background: #6c63ff;
+  color: #fff;
+}
+
+/* ── Status / info bar ── */
+.number-guessing-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+.number-guessing-info span {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 6px 14px;
+  border-radius: 6px;
+}
+
+/* ── Thermometer / range indicator ── */
+.number-guessing-thermometer {
+  position: relative;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.number-guessing-thermo-fill {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #00c6ff, #6c63ff, #ff6584);
+  border-radius: 16px;
+  transition: left 0.4s ease, width 0.4s ease;
+}
+
+.number-guessing-thermo-labels {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  pointer-events: none;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.number-guessing-thermo-marker {
+  position: absolute;
+  top: -6px;
+  width: 3px;
+  height: calc(100% + 12px);
+  background: #fff;
+  border-radius: 2px;
+  transition: left 0.35s ease;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+}
+
+/* ── Feedback message ── */
+.number-guessing-feedback {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  padding: 8px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.number-guessing-feedback.too-high {
+  color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.1);
+}
+
+.number-guessing-feedback.too-low {
+  color: #54a0ff;
+  background: rgba(84, 160, 255, 0.1);
+}
+
+.number-guessing-feedback.correct {
+  color: #2ecc71;
+  background: rgba(46, 204, 113, 0.12);
+}
+
+.number-guessing-feedback.paused {
+  color: #f39c12;
+  background: rgba(243, 156, 18, 0.1);
+}
+
+/* ── Input row ── */
+.number-guessing-input-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.number-guessing-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid #444;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  font-size: 1.1rem;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.number-guessing-input:focus {
+  border-color: #6c63ff;
+}
+
+.number-guessing-input::placeholder {
+  color: #666;
+}
+
+.number-guessing-input:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.number-guessing-submit-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 10px;
+  background: #6c63ff;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.number-guessing-submit-btn:hover {
+  background: #5a52e0;
+}
+
+.number-guessing-submit-btn:active {
+  transform: scale(0.96);
+}
+
+.number-guessing-submit-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Guess history ── */
+.number-guessing-history-title {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #888;
+  margin-bottom: 8px;
+}
+
+.number-guessing-history {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 180px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #444 transparent;
+}
+
+.number-guessing-history::-webkit-scrollbar {
+  width: 5px;
+}
+
+.number-guessing-history::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+
+.number-guessing-history-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 14px;
+  margin-bottom: 4px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 0.9rem;
+  animation: number-guessing-slideIn 0.25s ease;
+}
+
+.number-guessing-history-item .guess-num {
+  color: #999;
+  font-size: 0.8rem;
+}
+
+.number-guessing-history-item .guess-val {
+  font-weight: 600;
+  color: #fff;
+}
+
+.number-guessing-history-item .guess-dir {
+  font-weight: 600;
+}
+
+.number-guessing-history-item .guess-dir.high {
+  color: #ff6b6b;
+}
+
+.number-guessing-history-item .guess-dir.low {
+  color: #54a0ff;
+}
+
+.number-guessing-history-item .guess-dir.correct {
+  color: #2ecc71;
+}
+
+/* ── Restart button (shown on game over) ── */
+.number-guessing-restart-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  margin-top: 16px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #6c63ff, #48c6ef);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.1s ease;
+}
+
+.number-guessing-restart-btn:hover {
+  opacity: 0.9;
+}
+
+.number-guessing-restart-btn:active {
+  transform: scale(0.97);
+}
+
+/* ── Animations ── */
+@keyframes number-guessing-shake {
+  0%, 100% { transform: translateX(0); }
+  15% { transform: translateX(-8px); }
+  30% { transform: translateX(8px); }
+  45% { transform: translateX(-6px); }
+  60% { transform: translateX(6px); }
+  75% { transform: translateX(-3px); }
+  90% { transform: translateX(3px); }
+}
+
+@keyframes number-guessing-bounce {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.15); }
+  50%  { transform: scale(0.95); }
+  70%  { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes number-guessing-slideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.number-guessing-shake {
+  animation: number-guessing-shake 0.45s ease;
+}
+
+.number-guessing-bounce {
+  animation: number-guessing-bounce 0.5s ease;
+}

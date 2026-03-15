@@ -1,0 +1,283 @@
+/* Color Match – Scoped styles (.color-match- prefix) */
+
+.color-match-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  user-select: none;
+  color: #e0e0e0;
+}
+
+/* ── Header bar (score + timer) ── */
+.color-match-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 12px 20px;
+  margin-bottom: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
+.color-match-score,
+.color-match-timer {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.color-match-score span,
+.color-match-timer span {
+  color: #fff;
+}
+
+.color-match-level {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ── Timer bar ── */
+.color-match-timer-bar-wrap {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.color-match-timer-bar {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #00e676, #ffea00, #ff1744);
+  border-radius: 3px;
+  transition: width 0.25s linear;
+}
+
+/* ── Prompt area ── */
+.color-match-prompt-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 200px;
+  margin-bottom: 20px;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 16px;
+  padding: 32px 20px;
+  box-sizing: border-box;
+}
+
+.color-match-instruction {
+  font-size: 1rem;
+  color: #aaa;
+  margin-bottom: 12px;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.color-match-word {
+  font-size: 4.5rem;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.1;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  transition: opacity 0.15s ease;
+}
+
+.color-match-question {
+  margin-top: 18px;
+  font-size: 1.15rem;
+  color: #ccc;
+  text-align: center;
+}
+
+/* ── Buttons ── */
+.color-match-buttons {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.color-match-btn {
+  padding: 14px 40px;
+  font-size: 1.25rem;
+  font-weight: 800;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  min-width: 120px;
+  color: #fff;
+}
+
+.color-match-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
+.color-match-btn:active {
+  transform: translateY(0);
+}
+
+.color-match-btn-yes {
+  background: linear-gradient(135deg, #00c853, #009624);
+}
+
+.color-match-btn-no {
+  background: linear-gradient(135deg, #ff1744, #c4001d);
+}
+
+.color-match-btn-color {
+  padding: 12px 28px;
+  font-size: 1.1rem;
+  min-width: 100px;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+.color-match-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+  transform: none;
+}
+
+/* ── Feedback flash ── */
+.color-match-feedback {
+  font-size: 1.4rem;
+  font-weight: 800;
+  min-height: 36px;
+  margin-bottom: 12px;
+  text-align: center;
+  letter-spacing: 1px;
+  transition: opacity 0.2s ease;
+}
+
+.color-match-feedback-correct {
+  color: #00e676;
+}
+
+.color-match-feedback-wrong {
+  color: #ff1744;
+}
+
+.color-match-feedback-bonus {
+  color: #ffea00;
+  font-size: 1rem;
+  margin-top: 2px;
+}
+
+/* ── Streak / combo indicator ── */
+.color-match-streak {
+  font-size: 0.95rem;
+  color: #ffab00;
+  font-weight: 700;
+  min-height: 22px;
+  margin-bottom: 8px;
+}
+
+/* ── Start / Game-over overlay ── */
+.color-match-overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+.color-match-overlay-title {
+  font-size: 2.8rem;
+  font-weight: 900;
+  margin-bottom: 12px;
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, #ff1744, #ffea00, #00e676, #2979ff);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: color-match-gradient 4s ease infinite;
+}
+
+@keyframes color-match-gradient {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.color-match-overlay-subtitle {
+  font-size: 1.1rem;
+  color: #aaa;
+  margin-bottom: 28px;
+  line-height: 1.5;
+}
+
+.color-match-overlay-score {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.color-match-overlay-stats {
+  font-size: 0.95rem;
+  color: #999;
+  margin-bottom: 28px;
+  line-height: 1.8;
+}
+
+.color-match-btn-start {
+  padding: 16px 48px;
+  font-size: 1.4rem;
+  font-weight: 800;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  color: #fff;
+  background: linear-gradient(135deg, #6200ea, #304ffe);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.color-match-btn-start:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(98, 0, 234, 0.45);
+}
+
+.color-match-btn-start:active {
+  transform: translateY(0);
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .color-match-word {
+    font-size: 3rem;
+  }
+  .color-match-btn {
+    padding: 12px 24px;
+    font-size: 1.05rem;
+    min-width: 90px;
+  }
+  .color-match-overlay-title {
+    font-size: 2rem;
+  }
+}

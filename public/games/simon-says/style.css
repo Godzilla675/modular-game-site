@@ -1,0 +1,245 @@
+.simon-says-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  user-select: none;
+  padding: 20px;
+  color: #e0e0e0;
+}
+
+.simon-says-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.simon-says-title {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #ffffff;
+  text-transform: uppercase;
+  margin: 0 0 8px 0;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+}
+
+.simon-says-score {
+  font-size: 1.1rem;
+  color: #aaa;
+  margin: 0;
+}
+
+.simon-says-score span {
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+.simon-says-board {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  margin: 0 auto 28px;
+}
+
+/* Colored quadrant buttons */
+.simon-says-btn {
+  position: absolute;
+  width: 145px;
+  height: 145px;
+  border: none;
+  cursor: pointer;
+  transition: filter 0.1s ease, transform 0.1s ease, box-shadow 0.1s ease;
+  outline: none;
+  opacity: 0.65;
+}
+
+.simon-says-btn:active {
+  transform: scale(0.96);
+}
+
+.simon-says-btn.simon-says-disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Positions: cross / 2x2 grid pattern */
+.simon-says-btn-green {
+  top: 0;
+  left: 0;
+  background: #00c853;
+  border-radius: 50% 10% 10% 10%;
+  box-shadow: 0 0 12px rgba(0, 200, 83, 0.25);
+}
+
+.simon-says-btn-red {
+  top: 0;
+  right: 0;
+  background: #ff1744;
+  border-radius: 10% 50% 10% 10%;
+  box-shadow: 0 0 12px rgba(255, 23, 68, 0.25);
+}
+
+.simon-says-btn-yellow {
+  bottom: 0;
+  left: 0;
+  background: #ffd600;
+  border-radius: 10% 10% 10% 50%;
+  box-shadow: 0 0 12px rgba(255, 214, 0, 0.25);
+}
+
+.simon-says-btn-blue {
+  bottom: 0;
+  right: 0;
+  background: #2979ff;
+  border-radius: 10% 10% 50% 10%;
+  box-shadow: 0 0 12px rgba(41, 121, 255, 0.25);
+}
+
+/* Active / lit-up state */
+.simon-says-btn-green.simon-says-active {
+  opacity: 1;
+  background: #69f0ae;
+  filter: brightness(1.5);
+  box-shadow: 0 0 40px rgba(0, 200, 83, 0.7), inset 0 0 30px rgba(255, 255, 255, 0.2);
+  transform: scale(1.04);
+}
+
+.simon-says-btn-red.simon-says-active {
+  opacity: 1;
+  background: #ff8a80;
+  filter: brightness(1.5);
+  box-shadow: 0 0 40px rgba(255, 23, 68, 0.7), inset 0 0 30px rgba(255, 255, 255, 0.2);
+  transform: scale(1.04);
+}
+
+.simon-says-btn-yellow.simon-says-active {
+  opacity: 1;
+  background: #ffff8d;
+  filter: brightness(1.5);
+  box-shadow: 0 0 40px rgba(255, 214, 0, 0.7), inset 0 0 30px rgba(255, 255, 255, 0.2);
+  transform: scale(1.04);
+}
+
+.simon-says-btn-blue.simon-says-active {
+  opacity: 1;
+  background: #82b1ff;
+  filter: brightness(1.5);
+  box-shadow: 0 0 40px rgba(41, 121, 255, 0.7), inset 0 0 30px rgba(255, 255, 255, 0.2);
+  transform: scale(1.04);
+}
+
+/* Center circle overlay */
+.simon-says-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #1a1a2e;
+  border: 4px solid #2a2a4a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.simon-says-center-text {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* Status message */
+.simon-says-status {
+  font-size: 1rem;
+  min-height: 28px;
+  color: #aaa;
+  text-align: center;
+  margin-bottom: 20px;
+  transition: color 0.2s ease;
+}
+
+.simon-says-status.simon-says-status-error {
+  color: #ff1744;
+  font-weight: 700;
+}
+
+.simon-says-status.simon-says-status-success {
+  color: #00c853;
+  font-weight: 600;
+}
+
+/* Controls */
+.simon-says-controls {
+  display: flex;
+  gap: 12px;
+}
+
+.simon-says-start-btn {
+  padding: 12px 36px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border: 2px solid #4a4a6a;
+  border-radius: 8px;
+  background: #2a2a4a;
+  color: #e0e0e0;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+}
+
+.simon-says-start-btn:hover {
+  background: #3a3a5a;
+  border-color: #6a6a8a;
+}
+
+.simon-says-start-btn:active {
+  transform: scale(0.97);
+}
+
+/* Flash overlay for error feedback */
+.simon-says-flash {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 10;
+}
+
+@keyframes simon-says-error-flash {
+  0%, 100% { opacity: 0; }
+  25%, 75% { opacity: 0.6; }
+}
+
+.simon-says-board.simon-says-error-flash {
+  animation: simon-says-error-flash 0.6s ease 2;
+}
+
+/* Responsive */
+@media (max-width: 420px) {
+  .simon-says-board {
+    width: 260px;
+    height: 260px;
+  }
+  .simon-says-btn {
+    width: 118px;
+    height: 118px;
+  }
+  .simon-says-center {
+    width: 80px;
+    height: 80px;
+  }
+  .simon-says-title {
+    font-size: 1.5rem;
+  }
+}
