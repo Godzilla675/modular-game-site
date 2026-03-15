@@ -244,9 +244,8 @@ class SlidingPuzzle {
       this.slideTile(randomMove.row, randomMove.col, false); // false = no animation during shuffle
     }
 
-    // Ensure the puzzle is actually solvable by checking parity
-    // The 15-puzzle is solvable if and only if the number of inversions is even
-    this.ensureSolvable();
+    // No need for ensureSolvable() — shuffling via valid moves from the solved
+    // state guarantees the puzzle is always solvable.
   }
 
   ensureSolvable() {

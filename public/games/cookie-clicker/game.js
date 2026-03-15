@@ -20,6 +20,7 @@ class CookieClicker {
     this.gameloopInterval = null;
     this.animationFrameId = null;
     this.lastAnimationTime = 0;
+    this.floatingTextTimers = [];
 
     // DOM elements
     this.elements = {};
@@ -136,10 +137,14 @@ class CookieClicker {
     floatingText.style.left = rect.left + rect.width / 2 + 'px';
     floatingText.style.top = rect.top + 'px';
     
-    document.body.appendChild(floatingText);
+    this.container.appendChild(floatingText);
     
     // Animate and remove
-    setTimeout(() => floatingText.remove(), 800);
+    const timerId = setTimeout(() => {
+      floatingText.remove();
+      this.floatingTextTimers = this.floatingTextTimers.filter(t => t !== timerId);
+    }, 800);
+    this.floatingTextTimers.push(timerId);
 
     this.updateDisplay();
   }
@@ -218,7 +223,7 @@ class CookieClicker {
   }
 
   getScore() {
-    return this.score;
+    return Math.floor(this.score);
   }
 
   destroy() {
@@ -236,17 +241,9 @@ class CookieClicker {
       this.animationFrameId = null;
     }
 
-    // Remove event listeners
-    if (this.elements.cookieBtn) {
-      this.elements.cookieBtn.removeEventListener('click', this.handleCookieClick);
-    }
-
-    Object.keys(this.upgrades).forEach(key => {
-      const btn = this.elements[`upgrade-${key}`];
-      if (btn) {
-        btn.removeEventListener('click', () => this.buyUpgrade(key));
-      }
-    });
+    // Clear floating text timers
+    this.floatingTextTimers.forEach(t => clearTimeout(t));
+    this.floatingTextTimers = [];
 
     // Clear DOM
     this.container.innerHTML = '';

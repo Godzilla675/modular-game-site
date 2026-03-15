@@ -17,6 +17,7 @@ class MemoryMatch {
     this.flippedCards = [];
     this.matchedPairs = new Set();
     this.isProcessing = false;
+    this.matchCheckTimeout = null;
     
     this.emojis = [
       '🐶', '🐱', '🐭', '🐹', '🐰', '🦊',
@@ -80,11 +81,17 @@ class MemoryMatch {
    */
   destroy() {
     clearInterval(this.timerInterval);
+    this.timerInterval = null;
+    if (this.matchCheckTimeout) {
+      clearTimeout(this.matchCheckTimeout);
+      this.matchCheckTimeout = null;
+    }
     this.gameState = 'idle';
     this.container.innerHTML = '';
     this.cards = [];
     this.flippedCards = [];
     this.matchedPairs.clear();
+    this.isProcessing = false;
   }
 
   /**
@@ -292,7 +299,8 @@ class MemoryMatch {
     const card1 = this.cards[cardId1];
     const card2 = this.cards[cardId2];
 
-    setTimeout(() => {
+    this.matchCheckTimeout = setTimeout(() => {
+      this.matchCheckTimeout = null;
       if (card1.emoji === card2.emoji) {
         // Match found!
         card1.isMatched = true;

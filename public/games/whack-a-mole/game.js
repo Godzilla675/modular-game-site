@@ -106,10 +106,10 @@ class WhackAMole {
     this.container.appendChild(controls);
 
     // Cache DOM elements
-    this.scoreDisplay = document.getElementById('whack-a-mole-score');
-    this.timerDisplay = document.getElementById('whack-a-mole-timer');
-    this.pauseBtn = document.getElementById('whack-a-mole-pause-btn');
-    this.board = document.getElementById('whack-a-mole-board');
+    this.scoreDisplay = this.container.querySelector('#whack-a-mole-score');
+    this.timerDisplay = this.container.querySelector('#whack-a-mole-timer');
+    this.pauseBtn = this.container.querySelector('#whack-a-mole-pause-btn');
+    this.board = this.container.querySelector('#whack-a-mole-board');
 
     // Attach pause button listener
     this.pauseBtn.addEventListener('click', () => {
@@ -489,10 +489,13 @@ class WhackAMole {
     this.pauseBtn.textContent = '⏸ Pause';
 
     // Remove pause overlay
-    const pauseOverlay = document.getElementById('whack-a-mole-pause-overlay');
+    const pauseOverlay = this.container.querySelector('#whack-a-mole-pause-overlay');
     if (pauseOverlay) {
       pauseOverlay.remove();
     }
+
+    // Restart mole spawning (the spawn chain stops when paused)
+    this.spawnNextMole();
   }
 
   /**
@@ -506,7 +509,7 @@ class WhackAMole {
     this.moleTimeouts.forEach(timeout => clearTimeout(timeout));
     this.moleTimeouts = [];
     clearTimeout(this.moleSpawnTimer);
-    clearTimeout(this.gameTimer);
+    clearInterval(this.gameTimer);
 
     // Remove any active moles
     this.holes.forEach(hole => {
@@ -552,7 +555,7 @@ class WhackAMole {
     this.container.appendChild(gameOverOverlay);
 
     // Attach play again button listener
-    const playAgainBtn = document.getElementById('whack-a-mole-play-again');
+    const playAgainBtn = this.container.querySelector('#whack-a-mole-play-again');
     playAgainBtn.addEventListener('click', () => {
       this.destroy();
       this.start();
@@ -576,7 +579,7 @@ class WhackAMole {
     this.gamePaused = false;
 
     // Clear all timers
-    clearTimeout(this.gameTimer);
+    clearInterval(this.gameTimer);
     clearTimeout(this.moleSpawnTimer);
     this.moleTimeouts.forEach(timeout => clearTimeout(timeout));
     this.moleTimeouts = [];
