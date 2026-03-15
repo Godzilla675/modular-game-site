@@ -21,7 +21,7 @@ class TicTacToe {
 
   init() {
     this.container.innerHTML = '';
-    this.container.className = 'tic-tac-toe-container';
+    this.container.classList.add('tic-tac-toe-container');
 
     // Header with difficulty selector
     const header = document.createElement('div');
@@ -58,8 +58,8 @@ class TicTacToe {
     scoreDiv.className = 'tic-tac-toe-score';
     scoreDiv.id = 'tic-tac-toe-score';
     scoreDiv.innerHTML = `
-      <div class="tic-tac-toe-score-item">Score: <span id="tic-tac-toe-score-value">0</span></div>
-      <div class="tic-tac-toe-tally">W: <span id="tic-tac-toe-wins">0</span> | D: <span id="tic-tac-toe-draws">0</span> | L: <span id="tic-tac-toe-losses">0</span></div>
+      <div class="tic-tac-toe-score-item">Score: <span class="tic-tac-toe-score-value">0</span></div>
+      <div class="tic-tac-toe-tally">W: <span class="tic-tac-toe-wins">0</span> | D: <span class="tic-tac-toe-draws">0</span> | L: <span class="tic-tac-toe-losses">0</span></div>
     `;
     this.container.appendChild(scoreDiv);
 
@@ -118,8 +118,8 @@ class TicTacToe {
       cell.className = 'tic-tac-toe-cell';
     });
     
-    const overlay = document.getElementById('tic-tac-toe-overlay');
-    overlay.style.display = 'none';
+    const overlay = this.container.querySelector('.tic-tac-toe-overlay');
+    if (overlay) overlay.style.display = 'none';
   }
 
   pause() {
@@ -182,7 +182,7 @@ class TicTacToe {
   makeMove(index, player) {
     this.board[index] = player;
     const cell = this.cellElements[index];
-    cell.textContent = player;
+    // Don't set textContent — CSS ::before pseudo-element displays the letter
     cell.className = `tic-tac-toe-cell tic-tac-toe-${player.toLowerCase()}`;
 
     const result = this.checkWin();
@@ -349,14 +349,14 @@ class TicTacToe {
     this.updateScoreDisplay();
 
     // Highlight winning line
-    if (result.line) {
+    if (result && result.line) {
       this.highlightWinningLine(result.line);
     }
 
     // Show overlay
     setTimeout(() => {
-      const overlay = document.getElementById('tic-tac-toe-overlay');
-      const overlayText = document.getElementById('tic-tac-toe-overlay-text');
+      const overlay = this.container.querySelector('.tic-tac-toe-overlay');
+      const overlayText = this.container.querySelector('.tic-tac-toe-overlay-text');
       overlayText.textContent = message;
       overlay.style.display = 'flex';
     }, 600);
@@ -369,10 +369,10 @@ class TicTacToe {
   }
 
   updateScoreDisplay() {
-    const scoreValue = document.getElementById('tic-tac-toe-score-value');
-    const winsDisplay = document.getElementById('tic-tac-toe-wins');
-    const drawsDisplay = document.getElementById('tic-tac-toe-draws');
-    const lossesDisplay = document.getElementById('tic-tac-toe-losses');
+    const scoreValue = this.container.querySelector('.tic-tac-toe-score-value');
+    const winsDisplay = this.container.querySelector('.tic-tac-toe-wins');
+    const drawsDisplay = this.container.querySelector('.tic-tac-toe-draws');
+    const lossesDisplay = this.container.querySelector('.tic-tac-toe-losses');
 
     if (scoreValue) scoreValue.textContent = this.score;
     if (winsDisplay) winsDisplay.textContent = this.wins;

@@ -26,20 +26,20 @@ class Checkers {
       .fill(null)
       .map(() => Array(this.boardSize).fill(null));
 
-    // Place player pieces (red/dark) at bottom
+    // Place AI pieces at top (rows 0-2)
     for (let row = 0; row < 3; row++) {
       for (let col = 0; col < this.boardSize; col++) {
         if ((row + col) % 2 === 1) {
-          this.board[row][col] = { color: 'player', isKing: false };
+          this.board[row][col] = { color: 'ai', isKing: false };
         }
       }
     }
 
-    // Place AI pieces (light) at top
+    // Place player pieces at bottom (rows 5-7)
     for (let row = 5; row < 8; row++) {
       for (let col = 0; col < this.boardSize; col++) {
         if ((row + col) % 2 === 1) {
-          this.board[row][col] = { color: 'ai', isKing: false };
+          this.board[row][col] = { color: 'player', isKing: false };
         }
       }
     }
@@ -85,7 +85,7 @@ class Checkers {
 
   renderBoard() {
     this.container.innerHTML = '';
-    this.container.className = 'checkers-container';
+    this.container.classList.add('checkers-container');
 
     const boardEl = document.createElement('div');
     boardEl.className = 'checkers-board';
@@ -185,8 +185,8 @@ class Checkers {
     const directions = piece.isKing
       ? [[-1, -1], [-1, 1], [1, -1], [1, 1]]
       : piece.color === 'player'
-      ? [[1, -1], [1, 1]]
-      : [[-1, -1], [-1, 1]];
+      ? [[-1, -1], [-1, 1]]
+      : [[1, -1], [1, 1]];
 
     // Check regular moves
     for (const [dr, dc] of directions) {
@@ -212,8 +212,8 @@ class Checkers {
     const directions = piece.isKing
       ? [[-1, -1], [-1, 1], [1, -1], [1, 1]]
       : piece.color === 'player'
-      ? [[1, -1], [1, 1]]
-      : [[-1, -1], [-1, 1]];
+      ? [[-1, -1], [-1, 1]]
+      : [[1, -1], [1, 1]];
 
     for (const [dr, dc] of directions) {
       const enemyRow = row + dr;
@@ -284,8 +284,8 @@ class Checkers {
       }
     }
 
-    // Handle king promotion
-    if ((piece.color === 'player' && to.row === 7) || (piece.color === 'ai' && to.row === 0)) {
+    // Handle king promotion (player reaches top, AI reaches bottom)
+    if ((piece.color === 'player' && to.row === 0) || (piece.color === 'ai' && to.row === 7)) {
       piece.isKing = true;
       if (piece.color === 'player') {
         this.playerKings++;
@@ -388,8 +388,8 @@ class Checkers {
       }
     }
 
-    // Handle king promotion
-    if ((piece.color === 'ai' && to.row === 0) || (piece.color === 'player' && to.row === 7)) {
+    // Handle king promotion (AI reaches bottom, player reaches top)
+    if ((piece.color === 'ai' && to.row === 7) || (piece.color === 'player' && to.row === 0)) {
       piece.isKing = true;
       if (piece.color === 'ai') {
         this.aiKings++;
