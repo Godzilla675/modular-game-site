@@ -70,7 +70,7 @@ class SpaceInvaders {
     this.canvas = document.createElement('canvas');
     this.canvas.width = this.width;
     this.canvas.height = this.height;
-    this.canvas.className = 'space-invaders-game-canvas';
+    this.canvas.className = 'space-invaders-game-canvas game-canvas';
     this.container.appendChild(this.canvas);
     this.ctx = this.canvas.getContext('2d');
     
@@ -130,14 +130,6 @@ class SpaceInvaders {
       } else if (this.gameState === 'paused') {
         this.resume();
       }
-    }
-  }
-  
-  handleKeyDown(e) {
-    this.keys[e.key] = true;
-    
-    if (e.key === ' ') {
-      e.preventDefault();
     }
   }
   
@@ -204,13 +196,26 @@ class SpaceInvaders {
   }
   
   start() {
-    this.init();
+    // Cancel any existing game loop before starting a new one
+    if (this.gameLoopId) {
+      cancelAnimationFrame(this.gameLoopId);
+      this.gameLoopId = null;
+    }
+    if (!this.canvas) {
+      this.init();
+    }
     this.score = 0;
     this.lives = 3;
     this.wave = 1;
     this.alienSpeed = 1;
     this.alienDirection = 1;
+    this.playerProjectiles = [];
+    this.alienProjectiles = [];
+    this.ufo = null;
+    this.ufoSpawnTimer = 0;
+    this.player.x = this.width / 2 - this.player.width / 2;
     this.createAliens();
+    this.createShields();
     this.gameState = 'playing';
     this.lastTime = Date.now();
     this.startGameLoop();

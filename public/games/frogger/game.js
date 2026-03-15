@@ -63,7 +63,7 @@ class Frogger {
   setupGame() {
     // Create canvas
     this.canvas = document.createElement('canvas');
-    this.canvas.className = 'frogger-game-canvas';
+    this.canvas.className = 'frogger-game-canvas game-canvas';
     this.canvas.width = this.canvasWidth;
     this.canvas.height = this.canvasHeight;
     this.container.appendChild(this.canvas);
@@ -123,7 +123,7 @@ class Frogger {
     const spacing = this.canvasWidth / count;
     for (let i = 0; i < count; i++) {
       this.cars.push({
-        x: (i * spacing),
+        x: (i * spacing) / this.tileSize,
         y: row,
         width: 1.8,
         height: 0.8,

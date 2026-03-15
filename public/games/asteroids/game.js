@@ -35,7 +35,7 @@ class Asteroids {
   init() {
     // Create canvas
     this.canvas = document.createElement('canvas');
-    this.canvas.className = 'asteroids-game-canvas';
+    this.canvas.className = 'asteroids-game-canvas game-canvas';
     this.canvas.width = this.gameWidth;
     this.canvas.height = this.gameHeight;
     this.ctx = this.canvas.getContext('2d');
@@ -92,7 +92,7 @@ class Asteroids {
       vy: 0,
       angle: 0,
       radius: 12,
-      rotationSpeed: 6,
+      rotationSpeed: 300,
       thrustPower: 0.5,
       thrusting: false,
       maxVelocity: 6
@@ -100,18 +100,19 @@ class Asteroids {
   }
 
   setupEventListeners() {
-    // Keyboard controls
-    window.addEventListener('keydown', (e) => {
+    // Keyboard controls (store bound handlers for cleanup in destroy())
+    this.handleKeyDown = (e) => {
       this.keys[e.key] = true;
       if (e.key === ' ') {
         e.preventDefault();
         this.shoot();
       }
-    });
-
-    window.addEventListener('keyup', (e) => {
+    };
+    this.handleKeyUp = (e) => {
       this.keys[e.key] = false;
-    });
+    };
+    window.addEventListener('keydown', this.handleKeyDown);
+    window.addEventListener('keyup', this.handleKeyUp);
 
     // Mobile touch controls
     const buttons = this.container.querySelectorAll('.asteroids-btn');
