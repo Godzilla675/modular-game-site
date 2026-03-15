@@ -1,0 +1,342 @@
+/* Tic-Tac-Toe Game Styles */
+
+.tic-tac-toe-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Header with Difficulty Selector */
+.tic-tac-toe-header {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tic-tac-toe-label {
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tic-tac-toe-select {
+  padding: 8px 12px;
+  border: 2px solid white;
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tic-tac-toe-select:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+.tic-tac-toe-select option {
+  background-color: #667eea;
+  color: white;
+}
+
+/* Score Display */
+.tic-tac-toe-score {
+  text-align: center;
+  color: white;
+}
+
+.tic-tac-toe-score-item {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.tic-tac-toe-tally {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+#tic-tac-toe-score-value,
+#tic-tac-toe-wins,
+#tic-tac-toe-draws,
+#tic-tac-toe-losses {
+  font-weight: bold;
+  color: #fff;
+}
+
+/* Game Board */
+.tic-tac-toe-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 1 / 1;
+  padding: 12px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Game Cell */
+.tic-tac-toe-cell {
+  background-color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 48px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  color: #333;
+  user-select: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.tic-tac-toe-cell:hover:not(.tic-tac-toe-x):not(.tic-tac-toe-o) {
+  background-color: #f0f0f0;
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.tic-tac-toe-cell:active:not(.tic-tac-toe-x):not(.tic-tac-toe-o) {
+  transform: scale(0.95);
+}
+
+/* X and O Styling with Animation */
+.tic-tac-toe-x::before {
+  content: 'X';
+  animation: tic-tac-toe-draw-x 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes tic-tac-toe-draw-x {
+  0% {
+    opacity: 0;
+    transform: scale(0) rotate(-180deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+.tic-tac-toe-o::before {
+  content: 'O';
+  animation: tic-tac-toe-draw-o 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes tic-tac-toe-draw-o {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.tic-tac-toe-x {
+  color: #667eea;
+}
+
+.tic-tac-toe-o {
+  color: #764ba2;
+}
+
+/* Winning Line Highlight */
+.tic-tac-toe-winning {
+  animation: tic-tac-toe-winning-flash 0.6s ease-in-out;
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), inset 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+@keyframes tic-tac-toe-winning-flash {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+  }
+  50% {
+    transform: scale(1);
+  }
+  75% {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Game Over Overlay */
+.tic-tac-toe-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: tic-tac-toe-fade-in 0.3s ease-out;
+}
+
+@keyframes tic-tac-toe-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.tic-tac-toe-overlay-content {
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: tic-tac-toe-pop-up 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes tic-tac-toe-pop-up {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.tic-tac-toe-overlay-text {
+  margin: 0 0 30px 0;
+  font-size: 32px;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Button Styling */
+.tic-tac-toe-btn {
+  padding: 12px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.tic-tac-toe-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.tic-tac-toe-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+  .tic-tac-toe-container {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .tic-tac-toe-board {
+    gap: 6px;
+    padding: 10px;
+    max-width: 90vw;
+  }
+
+  .tic-tac-toe-cell {
+    font-size: 36px;
+  }
+
+  .tic-tac-toe-score-item {
+    font-size: 20px;
+  }
+
+  .tic-tac-toe-overlay-text {
+    font-size: 24px;
+  }
+
+  .tic-tac-toe-overlay-content {
+    padding: 30px;
+  }
+
+  .tic-tac-toe-btn {
+    padding: 10px 24px;
+    font-size: 14px;
+  }
+
+  .tic-tac-toe-label {
+    font-size: 14px;
+  }
+
+  .tic-tac-toe-select {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+}
+
+@media (max-width: 400px) {
+  .tic-tac-toe-cell {
+    font-size: 28px;
+  }
+
+  .tic-tac-toe-score-item {
+    font-size: 18px;
+  }
+
+  .tic-tac-toe-board {
+    gap: 4px;
+    padding: 8px;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .tic-tac-toe-overlay-content {
+    background: #2a2a2a;
+  }
+
+  .tic-tac-toe-overlay-text {
+    color: #fff;
+  }
+
+  .tic-tac-toe-select option {
+    background-color: #2a2a2a;
+  }
+}

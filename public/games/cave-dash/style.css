@@ -1,0 +1,304 @@
+/* Cave Dash Game Styles */
+
+/* Canvas Container */
+.cave-dash-game-canvas {
+  display: block;
+  max-width: 700px;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 700 / 400;
+  border: 3px solid #64c8ff;
+  border-radius: 4px;
+  background: #000;
+  cursor: pointer;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  box-shadow: 0 0 20px rgba(100, 200, 255, 0.3);
+  margin: 0 auto;
+  display: block;
+}
+
+/* Overlay Container */
+.cave-dash-overlay-container {
+  position: relative;
+  width: 100%;
+  height: 0;
+  pointer-events: none;
+}
+
+.cave-dash-game-over-overlay {
+  position: absolute;
+  top: -400px;
+  left: 0;
+  width: 100%;
+  height: 400px;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;
+  z-index: 100;
+  border: 3px solid #64c8ff;
+  border-radius: 4px;
+}
+
+.cave-dash-game-over-content {
+  text-align: center;
+  animation: cave-dash-fade-in 0.3s ease-out;
+}
+
+@keyframes cave-dash-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.cave-dash-game-over-title {
+  font-size: 48px;
+  font-weight: bold;
+  color: #ff4444;
+  margin: 0 0 30px 0;
+  text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+  font-family: Arial, sans-serif;
+  letter-spacing: 3px;
+}
+
+.cave-dash-game-over-score {
+  margin-bottom: 40px;
+  color: #64c8ff;
+}
+
+.cave-dash-score-label {
+  font-size: 18px;
+  color: rgba(100, 200, 255, 0.7);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.cave-dash-score-value {
+  font-size: 64px;
+  font-weight: bold;
+  color: #64c8ff;
+  text-shadow: 0 0 20px rgba(100, 200, 255, 0.5);
+  margin-bottom: 20px;
+  font-family: 'Courier New', monospace;
+}
+
+.cave-dash-score-breakdown {
+  font-size: 16px;
+  color: rgba(100, 200, 255, 0.8);
+  line-height: 1.8;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cave-dash-score-breakdown div {
+  background: rgba(100, 200, 255, 0.1);
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: 1px solid rgba(100, 200, 255, 0.3);
+}
+
+.cave-dash-play-again-button {
+  padding: 15px 40px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #000;
+  background: linear-gradient(135deg, #64c8ff, #4ab8ff);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(100, 200, 255, 0.5);
+  font-family: Arial, sans-serif;
+}
+
+.cave-dash-play-again-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(100, 200, 255, 0.8);
+}
+
+.cave-dash-play-again-button:active {
+  transform: scale(0.98);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .cave-dash-game-canvas {
+    border-width: 2px;
+    max-width: 100%;
+  }
+
+  .cave-dash-game-over-title {
+    font-size: 36px;
+  }
+
+  .cave-dash-score-value {
+    font-size: 48px;
+  }
+
+  .cave-dash-score-label {
+    font-size: 14px;
+  }
+
+  .cave-dash-score-breakdown {
+    font-size: 14px;
+  }
+
+  .cave-dash-play-again-button {
+    padding: 12px 30px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cave-dash-game-over-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+
+  .cave-dash-score-value {
+    font-size: 36px;
+    margin-bottom: 15px;
+  }
+
+  .cave-dash-game-over-score {
+    margin-bottom: 30px;
+  }
+
+  .cave-dash-score-label {
+    font-size: 12px;
+  }
+
+  .cave-dash-score-breakdown {
+    font-size: 12px;
+    gap: 10px;
+  }
+
+  .cave-dash-score-breakdown div {
+    padding: 6px 12px;
+  }
+
+  .cave-dash-play-again-button {
+    padding: 10px 24px;
+    font-size: 14px;
+  }
+}
+
+/* Animations */
+@keyframes cave-dash-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Utility Classes */
+.cave-dash-hidden {
+  display: none;
+}
+
+.cave-dash-full-width {
+  width: 100%;
+}
+
+/* Game Container Styling */
+.cave-dash-container {
+  width: 100%;
+  max-width: 700px;
+  margin: 20px auto;
+  padding: 0;
+}
+
+/* Instructions */
+.cave-dash-instructions {
+  color: #64c8ff;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.cave-dash-instructions p {
+  margin: 8px 0;
+}
+
+.cave-dash-instructions kbd {
+  background: rgba(100, 200, 255, 0.1);
+  border: 1px solid rgba(100, 200, 255, 0.3);
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-family: 'Courier New', monospace;
+  color: #64c8ff;
+}
+
+/* Stats Display */
+.cave-dash-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin-top: 20px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cave-dash-stat-item {
+  background: rgba(100, 200, 255, 0.05);
+  border: 1px solid rgba(100, 200, 255, 0.2);
+  border-radius: 4px;
+  padding: 10px;
+  text-align: center;
+  color: #64c8ff;
+}
+
+.cave-dash-stat-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.7;
+  margin-bottom: 5px;
+}
+
+.cave-dash-stat-value {
+  font-size: 24px;
+  font-weight: bold;
+  color: #64c8ff;
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .cave-dash-game-canvas {
+    border-color: #64c8ff;
+  }
+
+  .cave-dash-game-over-overlay {
+    background: rgba(0, 0, 0, 0.98);
+  }
+}
+
+/* Glow Effect */
+.cave-dash-glow {
+  animation: cave-dash-pulse 2s ease-in-out infinite;
+}
+
+/* Touch Target Size for Mobile */
+@media (hover: none) and (pointer: coarse) {
+  .cave-dash-play-again-button {
+    padding: 18px 50px;
+    min-height: 50px;
+    min-width: 140px;
+  }
+}

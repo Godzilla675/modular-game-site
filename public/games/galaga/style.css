@@ -1,0 +1,330 @@
+/* Galaga Game Styles */
+
+.galaga-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background: #1a1a2e;
+  border-radius: 8px;
+}
+
+.galaga-game-canvas {
+  display: block;
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  aspect-ratio: 500 / 600;
+  border: 3px solid #00ffff;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+  background: #000;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.galaga-ui {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 500px;
+  gap: 15px;
+  padding: 15px;
+  background: rgba(0, 255, 255, 0.1);
+  border: 2px solid #00ffff;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  color: #00ffff;
+  font-weight: bold;
+  font-size: 16px;
+  text-shadow: 0 0 10px #00ffff;
+}
+
+.galaga-score,
+.galaga-lives,
+.galaga-wave {
+  flex: 1;
+  text-align: center;
+  letter-spacing: 2px;
+}
+
+.galaga-controls {
+  display: flex;
+  gap: 15px;
+  width: 100%;
+  max-width: 500px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 15px;
+  background: rgba(0, 255, 255, 0.05);
+  border: 1px solid #00ffff;
+  border-radius: 4px;
+}
+
+.galaga-btn {
+  padding: 12px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  border: 2px solid #00ffff;
+  background: rgba(0, 255, 255, 0.2);
+  color: #00ffff;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  min-width: 60px;
+  text-shadow: 0 0 5px #00ffff;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.galaga-btn:hover {
+  background: rgba(0, 255, 255, 0.4);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+  transform: scale(1.05);
+}
+
+.galaga-btn:active {
+  transform: scale(0.98);
+  background: rgba(0, 255, 255, 0.6);
+}
+
+.galaga-btn-left {
+  order: 1;
+}
+
+.galaga-btn-right {
+  order: 2;
+}
+
+.galaga-btn-fire {
+  order: 3;
+  min-width: 80px;
+  background: rgba(255, 100, 0, 0.2);
+  border-color: #ff6400;
+  color: #ff6400;
+  text-shadow: 0 0 5px #ff6400;
+  box-shadow: 0 0 10px rgba(255, 100, 0, 0.3);
+}
+
+.galaga-btn-fire:hover {
+  background: rgba(255, 100, 0, 0.4);
+  box-shadow: 0 0 20px rgba(255, 100, 0, 0.6);
+}
+
+.galaga-game-over {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+.galaga-game-over-content {
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1));
+  border: 3px solid #00ffff;
+  border-radius: 8px;
+  padding: 40px;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(0, 255, 255, 0.5);
+  animation: pulseIn 0.5s ease-out;
+}
+
+@keyframes pulseIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.galaga-game-over-content h2 {
+  font-size: 48px;
+  color: #ff0000;
+  margin: 0 0 20px 0;
+  font-family: 'Courier New', monospace;
+  text-shadow: 0 0 20px #ff0000;
+  font-weight: bold;
+  letter-spacing: 3px;
+}
+
+.galaga-final-score {
+  font-size: 24px;
+  color: #00ffff;
+  margin: 20px 0;
+  font-family: 'Courier New', monospace;
+  text-shadow: 0 0 10px #00ffff;
+}
+
+.galaga-restart-btn {
+  padding: 15px 40px;
+  font-size: 18px;
+  font-weight: bold;
+  border: 2px solid #00ff00;
+  background: rgba(0, 255, 0, 0.2);
+  color: #00ff00;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+  text-shadow: 0 0 5px #00ff00;
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+  font-family: 'Courier New', monospace;
+}
+
+.galaga-restart-btn:hover {
+  background: rgba(0, 255, 0, 0.4);
+  box-shadow: 0 0 25px rgba(0, 255, 0, 0.6);
+  transform: scale(1.1);
+}
+
+.galaga-restart-btn:active {
+  transform: scale(0.98);
+}
+
+.galaga-pause {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  backdrop-filter: blur(2px);
+}
+
+.galaga-pause p {
+  font-size: 48px;
+  color: #ffff00;
+  font-family: 'Courier New', monospace;
+  text-shadow: 0 0 20px #ffff00;
+  margin: 0;
+  font-weight: bold;
+  letter-spacing: 3px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0.3;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .galaga-container {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .galaga-game-canvas {
+    border-width: 2px;
+  }
+
+  .galaga-ui {
+    font-size: 14px;
+    padding: 10px;
+    gap: 5px;
+  }
+
+  .galaga-controls {
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .galaga-btn {
+    padding: 10px 15px;
+    font-size: 16px;
+    min-width: 50px;
+  }
+
+  .galaga-btn-fire {
+    min-width: 70px;
+  }
+
+  .galaga-game-over-content {
+    padding: 30px;
+  }
+
+  .galaga-game-over-content h2 {
+    font-size: 36px;
+  }
+
+  .galaga-final-score {
+    font-size: 18px;
+  }
+
+  .galaga-restart-btn {
+    padding: 12px 30px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 400px) {
+  .galaga-ui {
+    flex-direction: column;
+    font-size: 13px;
+    gap: 8px;
+  }
+
+  .galaga-controls {
+    flex-direction: column;
+  }
+
+  .galaga-btn,
+  .galaga-btn-fire {
+    width: 100%;
+  }
+
+  .galaga-game-over-content h2 {
+    font-size: 28px;
+  }
+
+  .galaga-final-score {
+    font-size: 16px;
+  }
+}
+
+/* Dark theme colors for arcade feel */
+body {
+  background: #0a0e27;
+  color: #00ffff;
+  font-family: 'Courier New', monospace;
+}
+
+/* Pixel-perfect rendering */
+canvas {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  image-rendering: -moz-crisp-edges;
+}
+
+/* Neon glow effect on interactive elements */
+@media (hover: hover) {
+  .galaga-btn:hover {
+    box-shadow: 
+      0 0 10px rgba(0, 255, 255, 0.8),
+      inset 0 0 10px rgba(0, 255, 255, 0.2);
+  }
+
+  .galaga-btn-fire:hover {
+    box-shadow: 
+      0 0 10px rgba(255, 100, 0, 0.8),
+      inset 0 0 10px rgba(255, 100, 0, 0.2);
+  }
+}

@@ -1,0 +1,300 @@
+/* Asteroid Blaster Game Styles */
+
+.asteroid-blaster-game-canvas {
+  display: block;
+  width: 100%;
+  max-width: 600px;
+  height: 600px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, #000511 0%, #0a0515 100%);
+  border: 3px solid #00ffff;
+  box-shadow: 
+    0 0 10px #00ffff,
+    0 0 20px rgba(0, 255, 255, 0.5),
+    inset 0 0 10px rgba(0, 255, 255, 0.1);
+  border-radius: 4px;
+  image-rendering: pixelated;
+}
+
+.asteroid-blaster-mobile-controls {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 150px;
+  background: rgba(0, 5, 17, 0.9);
+  border-top: 2px solid #00ffff;
+  z-index: 100;
+}
+
+@media (max-width: 768px) {
+  .asteroid-blaster-mobile-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    gap: 30px;
+  }
+  
+  .asteroid-blaster-game-canvas {
+    height: calc(100vh - 180px);
+    max-width: 100%;
+    border-radius: 0;
+    border: 2px solid #00ffff;
+    margin: 0;
+  }
+}
+
+/* Virtual Joystick */
+.asteroid-blaster-joystick {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border: 2px solid #00ffff;
+  border-radius: 50%;
+  background: rgba(0, 255, 255, 0.1);
+  box-shadow: 
+    0 0 10px #00ffff,
+    inset 0 0 10px rgba(0, 255, 255, 0.2);
+  flex-shrink: 0;
+}
+
+.asteroid-blaster-joystick-knob {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: #00ffff;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 
+    0 0 10px #00ffff,
+    0 0 20px rgba(0, 255, 255, 0.5);
+  transition: all 0.05s ease-out;
+}
+
+/* Fire Button */
+.asteroid-blaster-fire-btn {
+  flex-shrink: 0;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid #ff00ff;
+  background: linear-gradient(135deg, rgba(255, 0, 255, 0.3) 0%, rgba(255, 0, 255, 0.1) 100%);
+  color: #ff00ff;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 
+    0 0 10px #ff00ff,
+    0 0 20px rgba(255, 0, 255, 0.5),
+    inset 0 0 10px rgba(255, 0, 255, 0.2);
+  transition: all 0.1s ease;
+  font-family: 'Courier New', monospace;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  touch-action: none;
+}
+
+.asteroid-blaster-fire-btn:active {
+  transform: scale(0.95);
+  box-shadow: 
+    0 0 20px #ff00ff,
+    0 0 40px rgba(255, 0, 255, 0.8),
+    inset 0 0 20px rgba(255, 0, 255, 0.4);
+  background: linear-gradient(135deg, rgba(255, 0, 255, 0.6) 0%, rgba(255, 0, 255, 0.3) 100%);
+}
+
+/* Game Container */
+.asteroid-blaster-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  font-family: 'Courier New', monospace;
+}
+
+/* HUD Styles (in-game text) */
+.asteroid-blaster-hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #00ffff;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  text-shadow: 0 0 10px #00ffff;
+  z-index: 50;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .asteroid-blaster-game-canvas {
+    border: 2px solid #00ffff;
+  }
+  
+  .asteroid-blaster-mobile-controls {
+    display: flex;
+  }
+}
+
+/* Animations */
+@keyframes neon-glow {
+  0%, 100% {
+    text-shadow: 0 0 10px #00ffff, 0 0 20px rgba(0, 255, 255, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 20px #00ffff, 0 0 40px rgba(0, 255, 255, 0.8);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Game Over Screen */
+.asteroid-blaster-game-over {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  font-family: 'Courier New', monospace;
+}
+
+.asteroid-blaster-game-over-content {
+  text-align: center;
+}
+
+.asteroid-blaster-game-over-title {
+  font-size: 64px;
+  color: #ff00ff;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-shadow: 0 0 20px #ff00ff;
+  animation: neon-glow 1.5s ease-in-out infinite;
+}
+
+.asteroid-blaster-game-over-score {
+  font-size: 36px;
+  color: #00ffff;
+  margin-bottom: 30px;
+  text-shadow: 0 0 10px #00ffff;
+}
+
+.asteroid-blaster-game-over-instructions {
+  font-size: 18px;
+  color: rgba(0, 255, 255, 0.7);
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+  animation: pulse 1s ease-in-out infinite;
+}
+
+/* Control Instructions */
+.asteroid-blaster-controls-info {
+  text-align: center;
+  color: rgba(0, 255, 255, 0.8);
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  margin-top: 15px;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+}
+
+.asteroid-blaster-control-row {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.asteroid-blaster-control-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  border-radius: 3px;
+  background: rgba(0, 255, 255, 0.05);
+}
+
+.asteroid-blaster-control-key {
+  color: #ffff00;
+  font-weight: bold;
+  padding: 3px 6px;
+  border: 1px solid #ffff00;
+  border-radius: 2px;
+  background: rgba(255, 255, 0, 0.1);
+}
+
+/* Difficulty/Wave Display */
+.asteroid-blaster-wave-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgba(0, 255, 255, 0.3);
+  font-size: 24px;
+  font-weight: bold;
+  text-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Status Effects */
+.asteroid-blaster-shield-active {
+  border: 2px dashed #00ff00;
+  box-shadow: 
+    0 0 15px #00ff00,
+    inset 0 0 15px rgba(0, 255, 0, 0.2);
+}
+
+.asteroid-blaster-rapid-fire-active {
+  border-color: #ff6400;
+  box-shadow: 
+    0 0 15px #ff6400,
+    inset 0 0 15px rgba(255, 100, 0, 0.2);
+}
+
+/* Dark Theme with Neon Accents */
+.asteroid-blaster-wrapper {
+  background: linear-gradient(135deg, #000511 0%, #0a0515 100%);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+}
+
+/* Touch Device Specific */
+@supports (touch-action: manipulation) {
+  .asteroid-blaster-fire-btn {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+}
+
+/* Smooth Transitions */
+* {
+  box-sizing: border-box;
+}
+
+.asteroid-blaster-game-canvas,
+.asteroid-blaster-fire-btn,
+.asteroid-blaster-joystick {
+  transition: box-shadow 0.3s ease;
+}

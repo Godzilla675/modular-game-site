@@ -1,0 +1,284 @@
+/* Frogger Game Styles */
+
+.frogger-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.frogger-game-canvas {
+  display: block;
+  border: 4px solid #2C3E50;
+  border-radius: 8px;
+  background-color: #34495E;
+  max-width: 600px;
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+
+.frogger-controls {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  max-width: 600px;
+}
+
+.frogger-button {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.frogger-button-start {
+  background: linear-gradient(135deg, #2ECC71 0%, #27AE60 100%);
+  color: white;
+}
+
+.frogger-button-start:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(46, 204, 113, 0.4);
+}
+
+.frogger-button-start:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(46, 204, 113, 0.4);
+}
+
+.frogger-button-pause {
+  background: linear-gradient(135deg, #3498DB 0%, #2980B9 100%);
+  color: white;
+}
+
+.frogger-button-pause:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(52, 152, 219, 0.4);
+}
+
+.frogger-button-pause:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.4);
+}
+
+.frogger-button-resume {
+  background: linear-gradient(135deg, #F39C12 0%, #E67E22 100%);
+  color: white;
+}
+
+.frogger-button-resume:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(243, 156, 18, 0.4);
+}
+
+.frogger-button-resume:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(243, 156, 18, 0.4);
+}
+
+.frogger-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.frogger-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.frogger-info-box {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.frogger-info-label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  opacity: 0.8;
+  margin-bottom: 4px;
+  letter-spacing: 1px;
+}
+
+.frogger-info-value {
+  display: block;
+  font-size: 18px;
+  font-weight: bold;
+  color: #2ECC71;
+}
+
+.frogger-instructions {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  padding: 15px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  width: 100%;
+  max-width: 600px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.frogger-instructions h3 {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #2ECC71;
+}
+
+.frogger-instructions ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.frogger-instructions li {
+  margin: 4px 0;
+}
+
+.frogger-instructions strong {
+  color: #F39C12;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .frogger-container {
+    padding: 15px;
+    gap: 15px;
+  }
+  
+  .frogger-game-canvas {
+    border-width: 3px;
+  }
+  
+  .frogger-button {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+  
+  .frogger-info {
+    grid-template-columns: 1fr;
+  }
+  
+  .frogger-instructions {
+    font-size: 11px;
+  }
+  
+  .frogger-info-value {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .frogger-container {
+    padding: 10px;
+    gap: 10px;
+  }
+  
+  .frogger-button {
+    padding: 8px 12px;
+    font-size: 11px;
+    flex: 1;
+    min-width: calc(50% - 8px);
+  }
+  
+  .frogger-info-box {
+    padding: 8px;
+  }
+  
+  .frogger-instructions {
+    padding: 10px;
+  }
+}
+
+/* Animation for button press */
+@keyframes frogger-button-press {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.98);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.frogger-button:active {
+  animation: frogger-button-press 0.2s ease;
+}
+
+/* Score update animation */
+@keyframes frogger-score-update {
+  0% {
+    color: #2ECC71;
+    text-shadow: 0 0 10px rgba(46, 204, 113, 0.8);
+  }
+  100% {
+    color: white;
+    text-shadow: none;
+  }
+}
+
+/* Success state */
+.frogger-success {
+  animation: frogger-score-update 0.6s ease;
+}
+
+/* Touch feedback for mobile */
+.frogger-game-canvas {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  tap-highlight-color: transparent;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .frogger-instructions {
+    background: rgba(0, 0, 0, 0.7);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+  
+  .frogger-info-box {
+    background: rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+}
+
+/* Print styles */
+@media print {
+  .frogger-container {
+    display: none;
+  }
+}

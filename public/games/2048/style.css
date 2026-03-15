@@ -1,0 +1,361 @@
+.game-2048-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  user-select: none;
+  -webkit-user-select: none;
+  position: relative;
+}
+
+.game-2048-ui {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 20px;
+}
+
+.game-2048-score-label {
+  font-size: 14px;
+  color: #776e65;
+  font-weight: 600;
+}
+
+.game-2048-score-value {
+  font-size: 32px;
+  font-weight: bold;
+  color: #2c3e50;
+  min-width: 80px;
+  text-align: right;
+}
+
+.game-2048-new-game-btn {
+  padding: 10px 20px;
+  background: #8f7a66;
+  color: #f9f6f2;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.game-2048-new-game-btn:hover {
+  background: #9f8a76;
+}
+
+.game-2048-new-game-btn:active {
+  background: #7f6a56;
+}
+
+/* Game Board */
+.game-2048-board {
+  background: #bbada0;
+  border-radius: 6px;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  position: relative;
+  aspect-ratio: 1;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.game-2048-cell {
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Tiles Container */
+.game-2048-tiles {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  pointer-events: none;
+}
+
+/* Tile Base Styles */
+.game-2048-tile {
+  position: relative;
+  background: #eee4da;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 35px;
+  font-weight: bold;
+  color: #776e65;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.15s ease-in-out;
+  z-index: 1;
+}
+
+/* Tile Colors by Value */
+.game-2048-tile-2 {
+  background: #eee4da;
+  color: #776e65;
+}
+
+.game-2048-tile-4 {
+  background: #ede0c8;
+  color: #776e65;
+}
+
+.game-2048-tile-8 {
+  background: #f2b179;
+  color: #f9f6f2;
+}
+
+.game-2048-tile-16 {
+  background: #f59563;
+  color: #f9f6f2;
+}
+
+.game-2048-tile-32 {
+  background: #f67c5f;
+  color: #f9f6f2;
+}
+
+.game-2048-tile-64 {
+  background: #f65e3b;
+  color: #f9f6f2;
+}
+
+.game-2048-tile-128 {
+  background: #edcf72;
+  color: #095;
+  font-size: 30px;
+}
+
+.game-2048-tile-256 {
+  background: #edcc61;
+  color: #095;
+  font-size: 30px;
+}
+
+.game-2048-tile-512 {
+  background: #edc850;
+  color: #095;
+  font-size: 30px;
+}
+
+.game-2048-tile-1024 {
+  background: #edc53f;
+  color: #095;
+  font-size: 25px;
+}
+
+.game-2048-tile-2048 {
+  background: #edc22e;
+  color: #095;
+  font-size: 25px;
+  box-shadow: 0 0 20px rgba(243, 215, 116, 0.8);
+}
+
+/* Support for larger tiles */
+.game-2048-tile-4096,
+.game-2048-tile-8192,
+.game-2048-tile-16384,
+.game-2048-tile-32768,
+.game-2048-tile-65536 {
+  background: #3c3c2f;
+  color: #f9f6f2;
+  font-size: 20px;
+}
+
+/* Merge animation */
+@keyframes game-2048-merge {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.game-2048-tile.merged {
+  animation: game-2048-merge 0.15s ease-in-out;
+}
+
+/* Overlay Styles */
+.game-2048-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 100;
+}
+
+.game-2048-overlay.game-2048-show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.game-2048-overlay-content {
+  text-align: center;
+  padding: 30px;
+}
+
+.game-2048-overlay-title {
+  font-size: 48px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.game-2048-overlay-score {
+  font-size: 24px;
+  color: #776e65;
+  margin-bottom: 30px;
+}
+
+.game-2048-overlay-score-value {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.game-2048-overlay-button {
+  display: block;
+  width: 200px;
+  padding: 12px 20px;
+  margin: 10px auto;
+  background: #8f7a66;
+  color: #f9f6f2;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.game-2048-overlay-button:hover {
+  background: #9f8a76;
+}
+
+.game-2048-overlay-button-secondary {
+  background: #bbada0;
+  color: #f9f6f2;
+}
+
+.game-2048-overlay-button-secondary:hover {
+  background: #cbbdb0;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .game-2048-container {
+    padding: 10px;
+  }
+
+  .game-2048-board {
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .game-2048-cell {
+    border-radius: 3px;
+  }
+
+  .game-2048-tile {
+    font-size: 28px;
+    border-radius: 3px;
+  }
+
+  .game-2048-tile-128,
+  .game-2048-tile-256,
+  .game-2048-tile-512 {
+    font-size: 24px;
+  }
+
+  .game-2048-tile-1024,
+  .game-2048-tile-2048 {
+    font-size: 20px;
+  }
+
+  .game-2048-ui {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .game-2048-score-value {
+    font-size: 24px;
+    min-width: 60px;
+  }
+
+  .game-2048-new-game-btn {
+    padding: 8px 16px;
+    font-size: 13px;
+    flex: 1;
+  }
+}
+
+/* Touch feedback */
+@media (hover: none) {
+  .game-2048-tile {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .game-2048-new-game-btn:active {
+    background: #7f6a56;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .game-2048-container {
+    color: #f0f0f0;
+  }
+
+  .game-2048-score-label {
+    color: #b0a0a0;
+  }
+
+  .game-2048-score-value {
+    color: #f0f0f0;
+  }
+
+  .game-2048-board {
+    background: #6b6360;
+  }
+
+  .game-2048-cell {
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .game-2048-overlay {
+    background: rgba(20, 20, 20, 0.95);
+  }
+
+  .game-2048-overlay-title {
+    color: #f0f0f0;
+  }
+
+  .game-2048-overlay-score {
+    color: #c0b0b0;
+  }
+
+  .game-2048-overlay-score-value {
+    color: #f0f0f0;
+  }
+}

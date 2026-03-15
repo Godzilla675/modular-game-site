@@ -1,0 +1,14 @@
+{
+  "id": "template-game",
+  "title": "Template Game",
+  "description": "A template game — copy this folder and modify to create a new game.",
+  "category": "arcade",
+  "tags": ["template"],
+  "thumbnail": "🎮",
+  "color": "#6366f1",
+  "difficulty": "easy",
+  "controls": { "desktop": "Describe controls here", "mobile": "Describe touch controls here" },
+  "version": "1.0.0",
+  "minPlayers": 1,
+  "maxPlayers": 1
+}

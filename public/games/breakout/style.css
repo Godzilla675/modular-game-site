@@ -1,0 +1,255 @@
+/* Breakout Game Styles */
+
+.breakout-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  font-family: 'Arial', sans-serif;
+}
+
+.breakout-game-canvas {
+  max-width: 600px;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  display: block;
+  border: 3px solid #2c3e50;
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  cursor: none;
+  touch-action: none;
+}
+
+.breakout-game-canvas:focus {
+  outline: none;
+  border-color: #4A90E2;
+  box-shadow: 0 8px 32px rgba(74, 144, 226, 0.4);
+}
+
+/* Game Over Overlay */
+.breakout-game-over-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  animation: breakout-fade-in 0.3s ease-out;
+}
+
+@keyframes breakout-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.breakout-game-over-content {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  padding: 40px 60px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: breakout-slide-up 0.4s ease-out;
+  border: 2px solid #3498db;
+}
+
+@keyframes breakout-slide-up {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.breakout-game-over-title {
+  font-size: 48px;
+  font-weight: bold;
+  color: #FF6B6B;
+  margin: 0 0 20px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.breakout-game-over-score {
+  font-size: 28px;
+  color: #FFC857;
+  margin: 20px 0 30px 0;
+  font-weight: bold;
+}
+
+#breakout-final-score {
+  color: #FFD93D;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.breakout-play-again-btn {
+  background: linear-gradient(135deg, #4A90E2 0%, #3498db 100%);
+  color: white;
+  border: none;
+  padding: 14px 40px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
+}
+
+.breakout-play-again-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(74, 144, 226, 0.6);
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+}
+
+.breakout-play-again-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(74, 144, 226, 0.4);
+}
+
+/* Control Instructions */
+.breakout-controls {
+  margin-top: 20px;
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+  max-width: 600px;
+}
+
+.breakout-controls h3 {
+  color: #333;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.breakout-controls p {
+  margin: 5px 0;
+  line-height: 1.6;
+}
+
+.breakout-controls-keyboard {
+  display: inline-block;
+  background: #f5f5f5;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .breakout-game-canvas {
+    max-width: 100%;
+    border-radius: 4px;
+  }
+
+  .breakout-game-over-content {
+    padding: 30px 40px;
+  }
+
+  .breakout-game-over-title {
+    font-size: 36px;
+  }
+
+  .breakout-game-over-score {
+    font-size: 24px;
+  }
+
+  #breakout-final-score {
+    font-size: 28px;
+  }
+
+  .breakout-play-again-btn {
+    padding: 12px 30px;
+    font-size: 16px;
+  }
+
+  .breakout-controls {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .breakout-game-over-content {
+    padding: 20px 30px;
+  }
+
+  .breakout-game-over-title {
+    font-size: 28px;
+    margin-bottom: 15px;
+  }
+
+  .breakout-game-over-score {
+    font-size: 20px;
+    margin: 15px 0 20px 0;
+  }
+
+  #breakout-final-score {
+    font-size: 24px;
+  }
+
+  .breakout-play-again-btn {
+    padding: 10px 25px;
+    font-size: 14px;
+  }
+}
+
+/* Utility Classes */
+.breakout-hidden {
+  display: none;
+}
+
+.breakout-text-center {
+  text-align: center;
+}
+
+/* Touch-friendly */
+@media (hover: none) and (pointer: coarse) {
+  .breakout-play-again-btn:active {
+    background: linear-gradient(135deg, #2c5aa0 0%, #1e3d5a 100%);
+  }
+
+  .breakout-game-canvas {
+    cursor: auto;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .breakout-game-over-overlay {
+    animation: none;
+  }
+
+  .breakout-game-over-content {
+    animation: none;
+  }
+
+  .breakout-play-again-btn {
+    transition: none;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .breakout-container {
+    display: none;
+  }
+}

@@ -1,0 +1,475 @@
+/* Typing Speed Test Game Styles */
+
+.typing-speed-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+/* Header Section */
+.typing-speed-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.typing-speed-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+
+.typing-speed-subtitle {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Controls Section */
+.typing-speed-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+}
+
+.typing-speed-timer-select {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.typing-speed-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.typing-speed-button-group {
+  display: flex;
+  gap: 10px;
+}
+
+/* Button Styles */
+.typing-speed-btn {
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: #667eea;
+  color: white;
+}
+
+.typing-speed-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  background: #5568d3;
+}
+
+.typing-speed-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+}
+
+.typing-speed-time-btn {
+  flex: 1;
+  padding: 12px;
+  background: #e9ecef;
+  color: #666;
+  font-size: 0.85rem;
+}
+
+.typing-speed-time-btn.active {
+  background: #667eea;
+  color: white;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.typing-speed-time-btn:hover {
+  background: #dee2e6;
+}
+
+.typing-speed-time-btn.active:hover {
+  background: #5568d3;
+}
+
+.typing-speed-start-btn {
+  padding: 12px 32px;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.typing-speed-restart-btn,
+.typing-speed-pause-btn,
+.typing-speed-play-again-btn {
+  padding: 12px 24px;
+}
+
+/* Stats Display */
+.typing-speed-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  border: 2px solid #f0f0f0;
+}
+
+.typing-speed-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.typing-speed-stat:hover {
+  background: #e7f0ff;
+  transform: translateY(-2px);
+}
+
+.typing-speed-stat-label {
+  font-size: 0.75rem;
+  color: #999;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.typing-speed-stat-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #667eea;
+  font-family: 'Courier New', monospace;
+}
+
+/* Passage Display */
+.typing-speed-display {
+  margin-bottom: 25px;
+  padding: 30px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border: 2px solid #e9ecef;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.typing-speed-passage {
+  font-size: 1.4rem;
+  line-height: 1.8;
+  color: #333;
+  word-wrap: break-word;
+  letter-spacing: 0.3px;
+  font-family: 'Georgia', serif;
+  text-align: center;
+  position: relative;
+}
+
+/* Character Styles in Passage */
+.typing-speed-char {
+  display: inline;
+  padding: 2px 1px;
+  transition: all 0.05s ease;
+  position: relative;
+}
+
+.typing-speed-char-correct {
+  color: #27ae60;
+  font-weight: 600;
+  background: rgba(39, 174, 96, 0.1);
+}
+
+.typing-speed-char-wrong {
+  color: #e74c3c;
+  background: rgba(231, 76, 60, 0.15);
+  font-weight: 600;
+  text-decoration: underline wavy #e74c3c;
+}
+
+.typing-speed-char-current {
+  color: #667eea;
+  background: rgba(102, 126, 234, 0.2);
+  font-weight: 700;
+}
+
+.typing-speed-char-upcoming {
+  color: #bdc3c7;
+}
+
+/* Caret/Cursor */
+.typing-speed-caret {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  height: 1.4rem;
+  background: #667eea;
+  animation: typing-speed-blink 1s ease-in-out infinite;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@keyframes typing-speed-blink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
+
+/* Input Field */
+.typing-speed-input {
+  width: 100%;
+  padding: 15px;
+  font-size: 1rem;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-family: 'Courier New', monospace;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.typing-speed-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  background: #f8f9ff;
+}
+
+.typing-speed-input:disabled {
+  background: #f5f5f5;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.typing-speed-input::placeholder {
+  color: #bdc3c7;
+}
+
+/* Buttons Container */
+.typing-speed-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.typing-speed-restart-btn,
+.typing-speed-pause-btn {
+  flex: 1;
+  min-width: 120px;
+}
+
+/* Results Display */
+.typing-speed-results {
+  padding: 40px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 12px;
+  border: 2px solid #e9ecef;
+  text-align: center;
+}
+
+.typing-speed-results-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 30px 0;
+  color: #333;
+}
+
+.typing-speed-results-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+@media (max-width: 500px) {
+  .typing-speed-results-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.typing-speed-result-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+  transition: all 0.3s ease;
+}
+
+.typing-speed-result-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(102, 126, 234, 0.15);
+  border-color: #667eea;
+}
+
+.typing-speed-result-label {
+  font-size: 0.85rem;
+  color: #999;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.typing-speed-result-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #667eea;
+  font-family: 'Courier New', monospace;
+}
+
+.typing-speed-play-again-btn {
+  width: 100%;
+  padding: 15px 32px;
+  font-size: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .typing-speed-container {
+    padding: 20px 15px;
+  }
+
+  .typing-speed-title {
+    font-size: 2rem;
+  }
+
+  .typing-speed-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .typing-speed-header {
+    margin-bottom: 30px;
+  }
+
+  .typing-speed-passage {
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  .typing-speed-stats {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .typing-speed-display {
+    padding: 20px;
+    min-height: 100px;
+  }
+
+  .typing-speed-btn {
+    padding: 10px 16px;
+    font-size: 0.85rem;
+  }
+
+  .typing-speed-buttons {
+    gap: 8px;
+  }
+
+  .typing-speed-restart-btn,
+  .typing-speed-pause-btn {
+    min-width: 100px;
+    flex: 1;
+  }
+
+  .typing-speed-results {
+    padding: 25px;
+  }
+
+  .typing-speed-results-title {
+    font-size: 1.5rem;
+  }
+
+  .typing-speed-result-value {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .typing-speed-container {
+    padding: 15px 10px;
+  }
+
+  .typing-speed-title {
+    font-size: 1.5rem;
+  }
+
+  .typing-speed-button-group {
+    flex-direction: column;
+  }
+
+  .typing-speed-time-btn {
+    width: 100%;
+  }
+
+  .typing-speed-passage {
+    font-size: 1rem;
+  }
+
+  .typing-speed-input {
+    font-size: 0.9rem;
+    padding: 12px;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.typing-speed-results {
+  animation: fadeIn 0.3s ease;
+}
+
+/* Loading/Disabled States */
+.typing-speed-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Print Styles */
+@media print {
+  .typing-speed-controls,
+  .typing-speed-buttons {
+    display: none;
+  }
+}

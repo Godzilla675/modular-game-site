@@ -1,0 +1,284 @@
+/* Robot Escape Game Styles */
+
+.robot-escape-ui-container {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.robot-escape-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  text-align: center;
+}
+
+.robot-escape-stat {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.robot-escape-label {
+  display: block;
+  font-size: 12px;
+  opacity: 0.9;
+  margin-bottom: 4px;
+}
+
+.robot-escape-level,
+.robot-escape-keys,
+.robot-escape-lives,
+.robot-escape-score {
+  display: block;
+  font-size: 24px;
+  font-weight: bold;
+  color: #FFD700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* Canvas Styles */
+.robot-escape-game-canvas {
+  display: block;
+  max-width: 700px;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 700 / 400;
+  border: 4px solid #333;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  background: #87CEEB;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* Mobile Controls */
+.robot-escape-mobile-controls {
+  display: none;
+  margin-top: 20px;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.robot-escape-dpad {
+  display: grid;
+  grid-template-columns: repeat(3, 60px);
+  gap: 5px;
+}
+
+.robot-escape-btn-up {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.robot-escape-dpad-row {
+  display: grid;
+  grid-template-columns: repeat(3, 60px);
+  gap: 5px;
+  grid-column: 1 / -1;
+  margin-top: 5px;
+}
+
+.robot-escape-btn-left,
+.robot-escape-btn-down,
+.robot-escape-btn-right {
+  width: 60px;
+  height: 60px;
+}
+
+.robot-escape-action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.robot-escape-btn-action {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid #333;
+  font-weight: bold;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.robot-escape-btn-jump {
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  color: white;
+}
+
+.robot-escape-btn-jump:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.robot-escape-btn-shoot {
+  background: linear-gradient(135deg, #FF6347 0%, #DC143C 100%);
+  color: white;
+}
+
+.robot-escape-btn-shoot:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* D-pad button styles */
+.robot-escape-dpad button,
+.robot-escape-dpad-row button {
+  background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+  color: white;
+  border: 3px solid #0d47a1;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.robot-escape-dpad button:active,
+.robot-escape-dpad-row button:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.robot-escape-dpad button:hover,
+.robot-escape-dpad-row button:hover,
+.robot-escape-btn-action:hover {
+  brightness: 1.1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .robot-escape-game-canvas {
+    max-width: 100%;
+  }
+
+  .robot-escape-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .robot-escape-stat {
+    padding: 10px;
+  }
+
+  .robot-escape-level,
+  .robot-escape-keys,
+  .robot-escape-lives,
+  .robot-escape-score {
+    font-size: 20px;
+  }
+
+  .robot-escape-label {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .robot-escape-mobile-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .robot-escape-game-canvas {
+    max-width: 100%;
+  }
+
+  .robot-escape-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .robot-escape-stat {
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .robot-escape-level,
+  .robot-escape-keys,
+  .robot-escape-lives,
+  .robot-escape-score {
+    font-size: 18px;
+  }
+
+  .robot-escape-label {
+    font-size: 10px;
+  }
+
+  .robot-escape-dpad {
+    grid-template-columns: repeat(3, 50px);
+  }
+
+  .robot-escape-dpad-row {
+    grid-template-columns: repeat(3, 50px);
+  }
+
+  .robot-escape-btn-left,
+  .robot-escape-btn-down,
+  .robot-escape-btn-right {
+    width: 50px;
+    height: 50px;
+  }
+
+  .robot-escape-btn-up {
+    width: 50px;
+    height: 50px;
+  }
+
+  .robot-escape-btn-action {
+    width: 70px;
+    height: 70px;
+    font-size: 11px;
+  }
+
+  .robot-escape-ui-container {
+    padding: 12px;
+    margin-top: 8px;
+  }
+}
+
+/* Animation for game canvas */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.robot-escape-game-canvas.active {
+  animation: bounce 0.3s ease;
+}
+
+/* Accessibility */
+.robot-escape-dpad button:focus,
+.robot-escape-dpad-row button:focus,
+.robot-escape-btn-action:focus {
+  outline: 3px solid #FFD700;
+  outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+  .robot-escape-mobile-controls {
+    display: none;
+  }
+  
+  .robot-escape-game-canvas {
+    page-break-inside: avoid;
+  }
+}

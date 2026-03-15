@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Arcade — Browser Games</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="antialiased">
+  <!-- Top Nav -->
+  <header id="site-header">
+    <div class="header-inner">
+      <a href="#/" class="logo" aria-label="Home">
+        <span class="logo-icon">▲</span>
+        <span class="logo-text">The Arcade</span>
+      </a>
+      <div class="search-wrapper" id="search-wrapper">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="search-input" placeholder="Search games..." autocomplete="off" spellcheck="false">
+        <div id="search-results" class="search-results hidden"></div>
+      </div>
+      <nav class="header-nav">
+        <button id="sound-toggle" class="nav-btn" aria-label="Toggle sound">
+          <svg id="sound-on-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          <svg id="sound-off-icon" class="hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+        </button>
+        <button id="favorites-toggle" class="nav-btn" aria-label="Show favorites">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main id="app">
+    <!-- Home View -->
+    <div id="view-home" class="view active">
+      <!-- Hero -->
+      <section class="hero">
+        <div class="hero-content">
+          <h1 class="hero-title">Play. Compete. <span class="hero-accent">Repeat.</span></h1>
+          <p class="hero-subtitle">33 handcrafted browser games. No downloads, no accounts — just hit play.</p>
+        </div>
+      </section>
+
+      <!-- Category Tabs -->
+      <section class="categories-bar">
+        <div class="categories-scroll">
+          <button class="cat-tab active" data-category="all">All Games</button>
+          <button class="cat-tab" data-category="arcade">🕹️ Arcade</button>
+          <button class="cat-tab" data-category="puzzle">🧩 Puzzle</button>
+          <button class="cat-tab" data-category="card">🃏 Cards</button>
+          <button class="cat-tab" data-category="board">♟️ Board</button>
+          <button class="cat-tab" data-category="action">🔫 Action</button>
+          <button class="cat-tab" data-category="platformer">🏃 Platformer</button>
+          <button class="cat-tab" data-category="word">📝 Word</button>
+          <button class="cat-tab" data-category="casual">🎯 Casual</button>
+        </div>
+      </section>
+
+      <!-- Recently Played -->
+      <section id="recently-played" class="section hidden">
+        <h2 class="section-title">Recently Played</h2>
+        <div id="recent-grid" class="game-grid game-grid-small"></div>
+      </section>
+
+      <!-- Games Grid -->
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title" id="grid-title">All Games</h2>
+          <span class="game-count" id="game-count"></span>
+        </div>
+        <div id="games-grid" class="game-grid"></div>
+        <div id="no-results" class="no-results hidden">
+          <span class="no-results-icon">🎮</span>
+          <p>No games found. Try a different search or category.</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- Game View -->
+    <div id="view-game" class="view">
+      <div class="game-view-header">
+        <a href="#/" class="back-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+          Back
+        </a>
+        <div class="game-view-info">
+          <span id="game-view-emoji" class="game-view-emoji"></span>
+          <h1 id="game-view-title" class="game-view-title"></h1>
+          <span id="game-view-category" class="cat-badge"></span>
+        </div>
+        <div class="game-view-actions">
+          <button id="game-fav-btn" class="nav-btn fav-btn" aria-label="Favorite">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <button id="game-info-btn" class="nav-btn" aria-label="Game info">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          </button>
+          <button id="game-restart-btn" class="nav-btn" aria-label="Restart">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          </button>
+        </div>
+      </div>
+      <div id="game-container" class="game-container"></div>
+      <div id="game-score-bar" class="game-score-bar">
+        <div class="score-item"><span class="score-label">Score</span><span id="current-score" class="score-value">0</span></div>
+        <div class="score-item"><span class="score-label">High Score</span><span id="high-score" class="score-value">0</span></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Info Modal -->
+  <div id="info-modal" class="modal-overlay hidden">
+    <div class="modal">
+      <button class="modal-close" aria-label="Close">&times;</button>
+      <h2 id="modal-title" class="modal-title"></h2>
+      <p id="modal-description" class="modal-desc"></p>
+      <div id="modal-controls" class="modal-controls"></div>
+      <div class="modal-meta">
+        <span id="modal-difficulty" class="meta-badge"></span>
+        <span id="modal-players" class="meta-badge"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="/js/storage.js"></script>
+  <script src="/js/sound.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/router.js"></script>
+  <script src="/js/game-loader.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

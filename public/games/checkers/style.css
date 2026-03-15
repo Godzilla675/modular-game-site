@@ -1,0 +1,276 @@
+/* Checkers Game Styles */
+
+.checkers-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.checkers-board {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  gap: 0;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 480px;
+  border: 3px solid #333;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  background-color: #2c3e50;
+}
+
+.checkers-square {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.checkers-square.checkers-light {
+  background-color: #f5deb3;
+  background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.05) 25%, transparent 25%),
+                    linear-gradient(-45deg, rgba(0, 0, 0, 0.05) 25%, transparent 25%),
+                    linear-gradient(45deg, transparent 75%, rgba(0, 0, 0, 0.05) 75%),
+                    linear-gradient(-45deg, transparent 75%, rgba(0, 0, 0, 0.05) 75%);
+  background-size: 4px 4px;
+  background-position: 0 0, 0 2px, 2px -2px, -2px 0;
+}
+
+.checkers-square.checkers-dark {
+  background-color: #654321;
+  background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%),
+                    linear-gradient(-45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%),
+                    linear-gradient(45deg, transparent 75%, rgba(0, 0, 0, 0.1) 75%),
+                    linear-gradient(-45deg, transparent 75%, rgba(0, 0, 0, 0.1) 75%);
+  background-size: 4px 4px;
+  background-position: 0 0, 0 2px, 2px -2px, -2px 0;
+}
+
+.checkers-square.checkers-selected {
+  outline: 3px solid #ffd700;
+  outline-offset: -3px;
+}
+
+.checkers-square.checkers-valid-move::after {
+  content: '';
+  position: absolute;
+  width: 30%;
+  height: 30%;
+  background-color: rgba(0, 200, 0, 0.6);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(0, 200, 0, 0.8);
+}
+
+.checkers-piece {
+  width: 85%;
+  height: 85%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  font-size: 28px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  user-select: none;
+}
+
+.checkers-piece:active {
+  cursor: grabbing;
+  transform: scale(0.95);
+}
+
+.checkers-piece.checkers-player {
+  background: linear-gradient(135deg, #d32f2f 0%, #8b0000 100%);
+  border: 2px solid #660000;
+  color: #fff;
+}
+
+.checkers-piece.checkers-player:hover {
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
+  transform: scale(1.05);
+}
+
+.checkers-piece.checkers-ai {
+  background: linear-gradient(135deg, #f0f0f0 0%, #cccccc 100%);
+  border: 2px solid #999;
+  color: #333;
+}
+
+.checkers-piece.checkers-ai:hover {
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
+  transform: scale(1.05);
+}
+
+.checkers-piece.checkers-king {
+  font-size: 32px;
+  font-weight: 900;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.checkers-piece.checkers-player.checkers-king {
+  text-shadow: 0 2px 4px rgba(255, 215, 0, 0.5);
+}
+
+.checkers-piece.checkers-ai.checkers-king {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.checkers-status {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 480px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+
+.checkers-score {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.checkers-turn {
+  font-size: 16px;
+  color: #666;
+  font-weight: 500;
+}
+
+.checkers-captured {
+  font-size: 14px;
+  color: #888;
+}
+
+.checkers-game-over {
+  margin-top: 10px;
+  padding: 12px;
+  background-color: #fff3cd;
+  border: 2px solid #ffc107;
+  border-radius: 4px;
+  color: #856404;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+  .checkers-container {
+    padding: 10px;
+    gap: 15px;
+  }
+
+  .checkers-board {
+    max-width: 100%;
+    border-width: 2px;
+  }
+
+  .checkers-piece {
+    font-size: 24px;
+  }
+
+  .checkers-piece.checkers-king {
+    font-size: 28px;
+  }
+
+  .checkers-status {
+    max-width: 100%;
+    padding: 12px;
+  }
+
+  .checkers-score {
+    font-size: 16px;
+  }
+
+  .checkers-turn {
+    font-size: 14px;
+  }
+
+  .checkers-captured {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  .checkers-container {
+    padding: 8px;
+    gap: 12px;
+  }
+
+  .checkers-board {
+    border-width: 2px;
+  }
+
+  .checkers-piece {
+    font-size: 20px;
+  }
+
+  .checkers-piece.checkers-king {
+    font-size: 24px;
+  }
+
+  .checkers-status {
+    padding: 10px;
+  }
+
+  .checkers-score {
+    font-size: 14px;
+  }
+
+  .checkers-turn {
+    font-size: 12px;
+  }
+
+  .checkers-captured {
+    font-size: 11px;
+  }
+}
+
+/* Animations */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.checkers-piece {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Focus styles for accessibility */
+.checkers-square:focus {
+  outline: 2px solid #0066cc;
+  outline-offset: -2px;
+}
+
+/* Print styles */
+@media print {
+  .checkers-container {
+    max-width: 100%;
+  }
+
+  .checkers-board {
+    max-width: 100%;
+    border: 1px solid #000;
+  }
+}

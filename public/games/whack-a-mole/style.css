@@ -1,0 +1,417 @@
+/* Whack-a-Mole Game Styles */
+
+.whack-a-mole-container {
+  max-width: 450px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Header with title */
+.whack-a-mole-header {
+  margin-bottom: 20px;
+}
+
+.whack-a-mole-header h1 {
+  margin: 0 0 10px 0;
+  font-size: 28px;
+  color: #333;
+}
+
+/* Game stats container */
+.whack-a-mole-stats {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.whack-a-mole-stat {
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.whack-a-mole-stat-label {
+  display: block;
+  font-size: 12px;
+  opacity: 0.9;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.whack-a-mole-stat-value {
+  display: block;
+  font-size: 32px;
+}
+
+/* Game board - 3x3 grid */
+.whack-a-mole-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  aspect-ratio: 1 / 1;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.15);
+  margin-bottom: 20px;
+}
+
+/* Individual hole */
+.whack-a-mole-hole {
+  position: relative;
+  background: radial-gradient(circle at 30% 30%, #555, #222);
+  border-radius: 50%;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.1s ease;
+}
+
+.whack-a-mole-hole:hover {
+  box-shadow: inset 0 6px 12px rgba(0, 0, 0, 0.6), 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Mole element */
+.whack-a-mole-mole {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(100%);
+  width: 80%;
+  height: 80%;
+  pointer-events: auto;
+  transition: none;
+}
+
+/* Mole pop-up animation */
+.whack-a-mole-mole.active {
+  animation: whackaMolePopUp 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+@keyframes whackaMolePopUp {
+  0% {
+    transform: translateX(-50%) translateY(100%);
+  }
+  100% {
+    transform: translateX(-50%) translateY(0%);
+  }
+}
+
+/* Mole going down animation */
+.whack-a-mole-mole.going-down {
+  animation: whackaMoleGoDown 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes whackaMoleGoDown {
+  0% {
+    transform: translateX(-50%) translateY(0%);
+  }
+  100% {
+    transform: translateX(-50%) translateY(100%);
+  }
+}
+
+/* Whacked animation - squash down */
+.whack-a-mole-mole.whacked {
+  animation: whackaMoleWhacked 0.3s ease-out forwards;
+}
+
+@keyframes whackaMoleWhacked {
+  0% {
+    transform: translateX(-50%) translateY(0%) scaleY(1);
+  }
+  50% {
+    transform: translateX(-50%) translateY(0%) scaleY(0.2);
+  }
+  100% {
+    transform: translateX(-50%) translateY(100%) scaleY(1);
+  }
+}
+
+/* Mole head SVG styling */
+.whack-a-mole-mole svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* Regular mole styling */
+.whack-a-mole-mole.type-regular svg {
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* Golden mole styling */
+.whack-a-mole-mole.type-golden {
+  filter: brightness(1.2);
+  animation: whackaMoleGoldenShine 0.6s ease-in-out infinite;
+}
+
+.whack-a-mole-mole.type-golden svg {
+  filter: drop-shadow(0px 0px 8px rgba(255, 215, 0, 0.8))
+          drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes whackaMoleGoldenShine {
+  0%, 100% {
+    filter: brightness(1.2);
+  }
+  50% {
+    filter: brightness(1.4);
+  }
+}
+
+/* Bomb mole styling */
+.whack-a-mole-mole.type-bomb {
+  animation: whackaMoleBombPulse 0.5s ease-in-out infinite;
+}
+
+.whack-a-mole-mole.type-bomb svg {
+  filter: drop-shadow(0px 0px 6px rgba(255, 100, 0, 0.8))
+          drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes whackaMoleBombPulse {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0%) scale(1);
+  }
+  50% {
+    transform: translateX(-50%) translateY(0%) scale(1.08);
+  }
+}
+
+/* Whacked feedback popup text */
+.whack-a-mole-whacked-text {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: bold;
+  font-size: 20px;
+  pointer-events: none;
+  animation: whackaMoleFloatUp 0.6s ease-out forwards;
+  z-index: 10;
+}
+
+.whack-a-mole-whacked-text.points-10 {
+  color: #4CAF50;
+}
+
+.whack-a-mole-whacked-text.points-50 {
+  color: #FFD700;
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.whack-a-mole-whacked-text.points-minus {
+  color: #FF6B6B;
+}
+
+@keyframes whackaMoleFloatUp {
+  0% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-60px);
+  }
+}
+
+/* Game over screen */
+.whack-a-mole-game-over {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: whackaMoleFadeIn 0.3s ease-out;
+}
+
+@keyframes whackaMoleFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.whack-a-mole-game-over-content {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: whackaMoleScaleIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes whackaMoleScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.whack-a-mole-game-over-content h2 {
+  margin: 0 0 20px 0;
+  font-size: 36px;
+  color: #333;
+}
+
+.whack-a-mole-final-score {
+  font-size: 48px;
+  font-weight: bold;
+  color: #667eea;
+  margin: 20px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.whack-a-mole-game-over-text {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+/* Buttons */
+.whack-a-mole-button {
+  padding: 12px 30px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.whack-a-mole-play-btn,
+.whack-a-mole-play-again-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.whack-a-mole-play-btn:hover,
+.whack-a-mole-play-again-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.whack-a-mole-play-btn:active,
+.whack-a-mole-play-again-btn:active {
+  transform: translateY(0);
+}
+
+.whack-a-mole-pause-resume-btn {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+  margin-bottom: 15px;
+}
+
+.whack-a-mole-pause-resume-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 87, 108, 0.6);
+}
+
+.whack-a-mole-pause-resume-btn:active {
+  transform: translateY(0);
+}
+
+/* Pause overlay */
+.whack-a-mole-pause-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  z-index: 100;
+}
+
+.whack-a-mole-pause-text {
+  font-size: 32px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Hover cursor effect */
+.whack-a-mole-hole:hover .whack-a-mole-mole {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><g transform="translate(2,2)"><rect x="0" y="0" width="20" height="20" fill="%23D2691E" stroke="%23000" stroke-width="1"/><rect x="2" y="0" width="2" height="4" fill="%23000"/><rect x="6" y="0" width="2" height="4" fill="%23000"/><rect x="10" y="0" width="2" height="4" fill="%23000"/><rect x="14" y="0" width="2" height="4" fill="%23000"/><rect x="18" y="0" width="2" height="4" fill="%23000"/><line x1="2" y1="8" x2="18" y2="8" stroke="%23000" stroke-width="1"/></g></svg>') 10 2, auto;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+  .whack-a-mole-container {
+    padding: 15px;
+  }
+
+  .whack-a-mole-header h1 {
+    font-size: 24px;
+  }
+
+  .whack-a-mole-stat-value {
+    font-size: 28px;
+  }
+
+  .whack-a-mole-board {
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .whack-a-mole-game-over-content {
+    padding: 30px 20px;
+    margin: 20px;
+  }
+
+  .whack-a-mole-game-over-content h2 {
+    font-size: 28px;
+  }
+
+  .whack-a-mole-final-score {
+    font-size: 40px;
+  }
+
+  .whack-a-mole-button {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}
+
+/* Accessibility */
+.whack-a-mole-hole:focus {
+  outline: 3px solid #667eea;
+  outline-offset: 2px;
+}
+
+.whack-a-mole-button:focus {
+  outline: 3px solid #667eea;
+  outline-offset: 2px;
+}

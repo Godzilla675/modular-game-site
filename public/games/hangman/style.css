@@ -1,0 +1,448 @@
+/* Hangman Game Styles */
+
+.hangman-container {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  background-color: #f5f5f5;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.hangman-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Canvas Container */
+.hangman-canvas-container {
+  display: flex;
+  justify-content: center;
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.hangman-canvas {
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 4px;
+  display: block;
+}
+
+/* Info Section */
+.hangman-info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.hangman-category {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.hangman-score {
+  font-size: 14px;
+  color: #27ae60;
+  font-weight: 600;
+}
+
+.hangman-wrong-count {
+  font-size: 14px;
+  color: #e74c3c;
+  font-weight: 600;
+}
+
+/* Word Display */
+.hangman-word-display {
+  background: white;
+  padding: 25px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 42px;
+  letter-spacing: 8px;
+  font-weight: bold;
+  color: #2c3e50;
+  font-family: 'Courier New', monospace;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  word-break: break-all;
+}
+
+/* Used Letters */
+.hangman-used-letters-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: flex-start;
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.hangman-used-letters-label {
+  font-weight: 600;
+  color: #2c3e50;
+  white-space: nowrap;
+}
+
+.hangman-used-letters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  flex: 1;
+}
+
+.hangman-used-letter-correct {
+  display: inline-block;
+  background: #27ae60;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.hangman-used-letter-wrong {
+  display: inline-block;
+  background: #e74c3c;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Keyboard */
+.hangman-keyboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(35px, 1fr));
+  gap: 8px;
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.hangman-letter-button {
+  padding: 10px 5px;
+  font-size: 14px;
+  font-weight: 600;
+  border: 2px solid #3498db;
+  background: #ecf0f1;
+  color: #2c3e50;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  min-height: 40px;
+}
+
+.hangman-letter-button:hover:not(:disabled) {
+  background: #3498db;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+}
+
+.hangman-letter-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.hangman-letter-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.hangman-letter-correct {
+  border-color: #27ae60 !important;
+  background: #27ae60 !important;
+  color: white !important;
+}
+
+.hangman-letter-wrong {
+  border-color: #e74c3c !important;
+  background: #e74c3c !important;
+  color: white !important;
+}
+
+/* Controls Section */
+.hangman-controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.hangman-hint-button,
+.hangman-pause-button,
+.hangman-new-game-button {
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  min-width: 100px;
+}
+
+.hangman-hint-button {
+  background: #f39c12;
+  color: white;
+}
+
+.hangman-hint-button:hover {
+  background: #e67e22;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(243, 156, 18, 0.3);
+}
+
+.hangman-hint-button:active {
+  transform: translateY(0);
+}
+
+.hangman-pause-button {
+  background: #9b59b6;
+  color: white;
+}
+
+.hangman-pause-button:hover {
+  background: #8e44ad;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(155, 89, 182, 0.3);
+}
+
+.hangman-pause-button.hangman-paused {
+  background: #16a085;
+}
+
+.hangman-pause-button.hangman-paused:hover {
+  background: #138d75;
+}
+
+.hangman-pause-button:active {
+  transform: translateY(0);
+}
+
+.hangman-new-game-button {
+  background: #2ecc71;
+  color: white;
+}
+
+.hangman-new-game-button:hover {
+  background: #27ae60;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3);
+}
+
+.hangman-new-game-button:active {
+  transform: translateY(0);
+}
+
+/* Overlay */
+.hangman-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: hangman-fade-in 0.3s ease;
+}
+
+.hangman-overlay.hidden {
+  display: none;
+}
+
+@keyframes hangman-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.hangman-overlay-content {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 400px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  animation: hangman-scale-in 0.3s ease;
+}
+
+@keyframes hangman-scale-in {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.hangman-overlay-message {
+  font-size: 32px;
+  font-weight: bold;
+  margin: 0 0 20px 0;
+  color: #2c3e50;
+}
+
+.hangman-overlay-word {
+  font-size: 18px;
+  color: #7f8c8d;
+  margin: 0 0 20px 0;
+  font-family: 'Courier New', monospace;
+}
+
+.hangman-overlay::after {
+  content: 'Click to play again';
+  position: absolute;
+  bottom: 30px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  animation: hangman-blink 2s infinite;
+}
+
+@keyframes hangman-blink {
+  0%, 100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+  .hangman-container {
+    padding: 15px;
+  }
+
+  .hangman-word-display {
+    font-size: 32px;
+    letter-spacing: 6px;
+    padding: 20px;
+  }
+
+  .hangman-canvas {
+    width: 100%;
+    height: auto;
+  }
+
+  .hangman-keyboard {
+    grid-template-columns: repeat(auto-fit, minmax(32px, 1fr));
+    gap: 6px;
+    padding: 12px;
+  }
+
+  .hangman-letter-button {
+    padding: 8px 4px;
+    font-size: 12px;
+    min-height: 36px;
+  }
+
+  .hangman-controls {
+    gap: 8px;
+  }
+
+  .hangman-hint-button,
+  .hangman-pause-button,
+  .hangman-new-game-button {
+    padding: 10px 16px;
+    font-size: 12px;
+    min-width: 80px;
+  }
+
+  .hangman-overlay-content {
+    padding: 30px 20px;
+    margin: 20px;
+    max-width: calc(100% - 40px);
+  }
+
+  .hangman-overlay-message {
+    font-size: 24px;
+  }
+
+  .hangman-overlay-word {
+    font-size: 16px;
+  }
+
+  .hangman-canvas-container {
+    padding: 15px;
+  }
+
+  .hangman-used-letters-section {
+    flex-direction: column;
+  }
+
+  .hangman-used-letters-label {
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 400px) {
+  .hangman-container {
+    padding: 10px;
+  }
+
+  .hangman-word-display {
+    font-size: 24px;
+    letter-spacing: 4px;
+    padding: 15px;
+  }
+
+  .hangman-keyboard {
+    grid-template-columns: repeat(auto-fit, minmax(28px, 1fr));
+  }
+
+  .hangman-letter-button {
+    padding: 6px 2px;
+    font-size: 11px;
+    min-height: 32px;
+  }
+
+  .hangman-overlay::after {
+    font-size: 12px;
+  }
+}
+
+/* Accessibility */
+.hangman-letter-button:focus,
+.hangman-hint-button:focus,
+.hangman-pause-button:focus,
+.hangman-new-game-button:focus {
+  outline: 2px solid #3498db;
+  outline-offset: 2px;
+}
+
+/* Smooth transitions */
+* {
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
