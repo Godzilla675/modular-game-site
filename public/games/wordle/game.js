@@ -242,7 +242,12 @@ class Wordle {
       'ACINEBOTHOGONIZE', 'ACINEBOTHOGONIZED', 'ACINEBOTHOGONIZES', 'ACINEBOTHOGONIZING'
     ]);
 
+    // Filter word lists to only valid 5-letter words and deduplicate
+    this.answerWords = [...new Set(this.answerWords.filter(w => w.length === 5))];
+    this.validGuesses = [...new Set(this.validGuesses.filter(w => w.length === 5))];
+
     this.letterStates = {}; // Track letter states for on-screen keyboard
+    this._keydownHandler = (e) => this.handleKeyPress(e);
     this.initDOM();
     this.attachEventListeners();
   }
@@ -281,20 +286,26 @@ class Wordle {
     const rows = [
       ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
       ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
-      ['Z', 'X', 'C', 'V', 'B', 'N', 'M']
+      ['ENTER', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', 'BACKSPACE']
     ];
 
     return rows.map(row => `
       <div class="wordle-keyboard-row">
-        ${row.map(letter => `
-          <button class="wordle-key" data-letter="${letter}">${letter}</button>
-        `).join('')}
+        ${row.map(letter => {
+          if (letter === 'ENTER') {
+            return `<button class="wordle-key wordle-key-wide" data-letter="ENTER">ENTER</button>`;
+          }
+          if (letter === 'BACKSPACE') {
+            return `<button class="wordle-key wordle-key-wide" data-letter="BACKSPACE">⌫</button>`;
+          }
+          return `<button class="wordle-key" data-letter="${letter}">${letter}</button>`;
+        }).join('')}
       </div>
     `).join('');
   }
 
   attachEventListeners() {
-    document.addEventListener('keydown', (e) => this.handleKeyPress(e));
+    document.addEventListener('keydown', this._keydownHandler);
     
     this.container.querySelectorAll('.wordle-key').forEach(key => {
       key.addEventListener('click', (e) => {
@@ -326,10 +337,12 @@ class Wordle {
     });
 
     this.container.querySelectorAll('.wordle-key').forEach(key => {
-      key.className = 'wordle-key';
+      key.classList.remove('wordle-green', 'wordle-yellow', 'wordle-gray');
     });
 
-    this.container.querySelector('.wordle-message').textContent = '';
+    const msg = this.container.querySelector('.wordle-message');
+    msg.textContent = '';
+    msg.classList.remove('wordle-message-win', 'wordle-message-lose');
   }
 
   getRandomWord() {
@@ -500,7 +513,7 @@ class Wordle {
   }
 
   destroy() {
-    document.removeEventListener('keydown', (e) => this.handleKeyPress(e));
+    document.removeEventListener('keydown', this._keydownHandler);
     this.container.innerHTML = '';
   }
 

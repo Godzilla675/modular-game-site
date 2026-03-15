@@ -365,19 +365,7 @@ class TypingSpeed {
     // Clear timer
     if (this.timerInterval) clearInterval(this.timerInterval);
 
-    // Remove event listeners
-    this.startBtn.removeEventListener('click', () => this.start());
-    this.restartBtn.removeEventListener('click', () => this.start());
-    this.pauseBtn.removeEventListener('click', () => this.togglePause());
-    this.playAgainBtn.removeEventListener('click', () => this.start());
-    this.inputElement.removeEventListener('input', (e) => this.handleInput(e));
-    this.inputElement.removeEventListener('keydown', (e) => this.handleKeydown(e));
-
-    this.timeBtns.forEach(btn => {
-      btn.removeEventListener('click', () => {});
-    });
-
-    // Clear container
+    // Clearing innerHTML removes all DOM-attached listeners
     this.container.innerHTML = '';
 
     // Reset state

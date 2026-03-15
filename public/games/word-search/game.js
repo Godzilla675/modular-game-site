@@ -506,18 +506,7 @@ class WordSearch {
   destroy() {
     if (this.timerInterval) clearInterval(this.timerInterval);
 
-    // Remove event listeners
-    const gridElement = document.getElementById('wordSearchGrid');
-    if (gridElement) {
-      gridElement.removeEventListener('mousedown', this.onMouseDown.bind(this));
-      gridElement.removeEventListener('mousemove', this.onMouseMove.bind(this));
-      gridElement.removeEventListener('mouseup', this.onMouseUp.bind(this));
-      gridElement.removeEventListener('touchstart', this.onTouchStart.bind(this));
-      gridElement.removeEventListener('touchmove', this.onTouchMove.bind(this));
-      gridElement.removeEventListener('touchend', this.onTouchEnd.bind(this));
-    }
-
-    // Clear DOM
+    // Clearing innerHTML removes all DOM-attached listeners
     this.container.innerHTML = '';
 
     // Clear state

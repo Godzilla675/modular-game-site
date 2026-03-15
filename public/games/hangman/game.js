@@ -59,11 +59,15 @@ class Hangman {
     this.canvasContext = null;
     this.animationFrameIds = [];
     this.eventListeners = [];
+    this.initialized = false;
+
+    this.init();
   }
 
   init() {
     this.buildDOM();
     this.attachEventListeners();
+    this.initialized = true;
   }
 
   buildDOM() {
@@ -226,6 +230,8 @@ class Hangman {
   }
 
   start() {
+    if (!this.initialized) this.init();
+
     this.gameState = {
       word: '',
       category: '',

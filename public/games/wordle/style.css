@@ -180,6 +180,11 @@
   opacity: 0.5;
 }
 
+.wordle-key-wide {
+  min-width: 60px;
+  font-size: 11px;
+}
+
 /* Controls */
 .wordle-controls {
   display: flex;
