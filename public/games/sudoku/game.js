@@ -219,8 +219,8 @@ class Sudoku {
       });
     }
 
-    // Keyboard support
-    document.addEventListener('keydown', (e) => {
+    // Keyboard support — bound method for proper cleanup
+    this._handleKeyDown = (e) => {
       if (this.selectedCell === null || this.isPaused) return;
 
       const key = e.key;
@@ -231,7 +231,8 @@ class Sudoku {
         e.preventDefault();
         this.fillCell(0);
       }
-    });
+    };
+    document.addEventListener('keydown', this._handleKeyDown);
   }
 
   start() {
@@ -256,56 +257,31 @@ class Sudoku {
   }
 
   generatePuzzle() {
-    // Generate complete valid solution
     this.solution = Array(81).fill(0);
     this.fillSudoku(this.solution);
 
-    // Create puzzle by removing clues
     const config = this.difficultyConfig[this.difficulty];
     const clueCount = Math.floor(Math.random() * (config.max - config.min + 1)) + config.min;
-    
-    this.grid = this.solution.map(v => v);
-    const cellsToRemove = 81 - clueCount;
-    
-    let removed = 0;
-    const attempts = new Set();
-    
-    while (removed < cellsToRemove && attempts.size < 100) {
-      const idx = Math.floor(Math.random() * 81);
-      if (removed < 40) { // First 40 removals, try any cell
-        if (this.grid[idx] !== 0) {
-          this.grid[idx] = 0;
-          removed++;
-        }
-      } else {
-        // For remaining cells, be more selective to ensure difficulty
-        if (this.grid[idx] !== 0) {
-          const original = this.grid[idx];
-          this.grid[idx] = 0;
-          
-          // Simple validity check - ensure it still has solutions
-          if (this.countSolutions(this.grid) === 1) {
-            removed++;
-          } else {
-            this.grid[idx] = original;
-          }
-        }
-      }
-      attempts.add(idx);
+
+    this.grid = [...this.solution];
+
+    // Shuffle cell indices and remove cells to create puzzle
+    const indices = Array.from({length: 81}, (_, i) => i);
+    for (let i = indices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [indices[i], indices[j]] = [indices[j], indices[i]];
     }
 
-    this.initialGrid = this.grid.map(v => v);
+    const toRemove = 81 - clueCount;
+    for (let i = 0; i < toRemove && i < indices.length; i++) {
+      this.grid[indices[i]] = 0;
+    }
+
+    this.initialGrid = [...this.grid];
   }
 
   fillSudoku(grid) {
-    const row = Math.floor(Math.random() * 9);
-    const col = Math.floor(Math.random() * 9);
-
-    for (let i = 0; i < 81; i++) {
-      const r = (row + Math.floor(i / 9)) % 9;
-      const c = (col + (i % 9)) % 9;
-      const index = r * 9 + c;
-
+    for (let index = 0; index < 81; index++) {
       if (grid[index] === 0) {
         const numbers = this.shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
@@ -481,11 +457,14 @@ class Sudoku {
         }
       }
 
-      // Error highlighting
+      // Error highlighting — temporarily clear cell so isValid doesn't match itself
       if (this.grid[index] !== 0 && this.initialGrid[index] === 0) {
-        if (!this.isValid(this.grid, index, this.grid[index])) {
+        const val = this.grid[index];
+        this.grid[index] = 0;
+        if (!this.isValid(this.grid, index, val)) {
           cell.classList.add('sudoku-cell-error');
         }
+        this.grid[index] = val;
       }
 
       // Notes display
@@ -578,11 +557,12 @@ class Sudoku {
 
   destroy() {
     this.clearTimer();
+    if (this._handleKeyDown) {
+      document.removeEventListener('keydown', this._handleKeyDown);
+      this._handleKeyDown = null;
+    }
     this.container.innerHTML = '';
     this.container.className = '';
-    
-    // Remove any external event listeners
-    document.removeEventListener('keydown', this.handleKeyDown);
   }
 
   shuffle(array) {

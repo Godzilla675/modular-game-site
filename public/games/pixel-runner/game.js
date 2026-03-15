@@ -213,12 +213,16 @@ class PixelRunner {
       this.player.y = this.GROUND_Y;
       this.player.velocityY = 0;
       this.player.jumping = false;
+      // Reset jumpHeld on landing when no jump keys are held (enables mouse/touch re-jump)
+      if (!this.keys[' '] && !this.keys['arrowup']) {
+        this.player.jumpHeld = false;
+      }
     }
 
     this.player.y += this.player.velocityY;
 
     // Allow higher jump if holding jump button and recently jumped
-    if (this.player.jumpHeld && this.player.velocityY < -2 && this.keys[' '] || this.keys['arrowup']) {
+    if (this.player.jumpHeld && this.player.velocityY < -2 && (this.keys[' '] || this.keys['arrowup'])) {
       this.player.velocityY += 0.3; // Slight boost while holding
     }
   }

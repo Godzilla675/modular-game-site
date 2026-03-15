@@ -2,7 +2,7 @@ class AsteroidBlaster {
   constructor(container) {
     this.container = container;
     this.canvas = document.createElement('canvas');
-    this.canvas.className = 'asteroid-blaster-game-canvas';
+    this.canvas.className = 'asteroid-blaster-game-canvas game-canvas';
     this.canvas.width = 600;
     this.canvas.height = 600;
     this.ctx = this.canvas.getContext('2d');
@@ -236,7 +236,14 @@ class AsteroidBlaster {
   createAsteroid(x, y, size) {
     const angle = Math.random() * Math.PI * 2;
     const speed = 1 + (3 - size) * 0.5;
-    
+    const points = 8 + size * 2;
+
+    // Pre-compute vertex offsets so the shape doesn't flicker each frame
+    const vertices = [];
+    for (let i = 0; i < points; i++) {
+      vertices.push(0.7 + Math.random() * 0.3);
+    }
+
     return {
       x,
       y,
@@ -245,7 +252,8 @@ class AsteroidBlaster {
       size,
       rotation: Math.random() * Math.PI * 2,
       rotationSpeed: (Math.random() - 0.5) * 0.1,
-      radius: size * 15
+      radius: size * 15,
+      vertices
     };
   }
   
@@ -613,10 +621,10 @@ class AsteroidBlaster {
     this.ctx.lineWidth = 2;
     
     this.ctx.beginPath();
-    const points = 8 + ast.size * 2;
+    const points = ast.vertices.length;
     for (let i = 0; i < points; i++) {
       const angle = (Math.PI * 2 * i) / points;
-      const r = ast.radius * (0.7 + Math.random() * 0.3);
+      const r = ast.radius * ast.vertices[i];
       const x = Math.cos(angle) * r;
       const y = Math.sin(angle) * r;
       if (i === 0) this.ctx.moveTo(x, y);

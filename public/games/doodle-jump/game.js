@@ -59,7 +59,7 @@ class DoodleJump {
 
     // Create canvas
     this.canvas = document.createElement('canvas');
-    this.canvas.className = 'doodle-jump-canvas';
+    this.canvas.className = 'doodle-jump-canvas game-canvas';
     this.canvas.width = 400;
     this.canvas.height = 600;
     this.ctx = this.canvas.getContext('2d');
@@ -114,17 +114,20 @@ class DoodleJump {
   }
 
   setupEventListeners() {
-    // Keyboard
-    window.addEventListener('keydown', (e) => {
+    // Keyboard (stored as bound references for proper cleanup)
+    this._handleKeyDown = (e) => {
       this.keys[e.key] = true;
       if (['ArrowLeft', 'ArrowRight'].includes(e.key)) {
         e.preventDefault();
       }
-    });
+    };
 
-    window.addEventListener('keyup', (e) => {
+    this._handleKeyUp = (e) => {
       this.keys[e.key] = false;
-    });
+    };
+
+    window.addEventListener('keydown', this._handleKeyDown);
+    window.addEventListener('keyup', this._handleKeyUp);
 
     // Mobile touch controls
     this.mobileControls.addEventListener('touchstart', (e) => {
@@ -212,11 +215,12 @@ class DoodleJump {
   }
 
   destroy() {
+    this.gameRunning = false;
     if (this.animationFrameId) {
       cancelAnimationFrame(this.animationFrameId);
     }
-    window.removeEventListener('keydown', this.handleKeyDown);
-    window.removeEventListener('keyup', this.handleKeyUp);
+    window.removeEventListener('keydown', this._handleKeyDown);
+    window.removeEventListener('keyup', this._handleKeyUp);
     if (this.wrapper && this.wrapper.parentNode) {
       this.wrapper.parentNode.removeChild(this.wrapper);
     }
@@ -325,8 +329,8 @@ class DoodleJump {
     this.checkEnemyCollisions();
     this.checkPowerUpCollisions();
 
-    // Check game over
-    if (this.player.y > this.canvas.height + 200) {
+    // Check game over (camera-relative: player fell below visible screen)
+    if (this.player.y > this.cameraY + this.canvas.height + 200) {
       this.endGame();
     }
 
@@ -524,7 +528,7 @@ class DoodleJump {
   }
 
   showGameOverScreen() {
-    document.getElementById('final-score').textContent = this.maxHeightReached;
+    this.gameOverOverlay.querySelector('.doodle-jump-score-value').textContent = this.maxHeightReached;
     this.gameOverOverlay.classList.add('show');
   }
 

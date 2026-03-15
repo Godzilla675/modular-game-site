@@ -22,11 +22,22 @@ class ConnectFour {
     this.overlay = null;
     this.cells = [];
     
+    this.aiTimeout = null;
+    this.dropTimeouts = [];
+    
     // Bind methods
     this.handleColumnClick = this.handleColumnClick.bind(this);
   }
   
   start() {
+    // Clear pending timeouts from previous game
+    if (this.aiTimeout) {
+      clearTimeout(this.aiTimeout);
+      this.aiTimeout = null;
+    }
+    this.dropTimeouts.forEach(t => clearTimeout(t));
+    this.dropTimeouts = [];
+
     this.score = 0;
     this.gameActive = true;
     this.gameOver = false;
@@ -51,6 +62,14 @@ class ConnectFour {
   }
   
   destroy() {
+    this.gameActive = false;
+    this.gameOver = true;
+    if (this.aiTimeout) {
+      clearTimeout(this.aiTimeout);
+      this.aiTimeout = null;
+    }
+    this.dropTimeouts.forEach(t => clearTimeout(t));
+    this.dropTimeouts = [];
     if (this.container) {
       this.container.innerHTML = '';
     }
@@ -124,13 +143,14 @@ class ConnectFour {
     }
     
     wrapper.appendChild(this.gameBoard);
-    this.container.appendChild(wrapper);
     
-    // Create overlay for game end
+    // Create overlay for game end (inside wrapper for correct positioning)
     this.overlay = document.createElement('div');
     this.overlay.className = 'connect-four-overlay';
     this.overlay.style.display = 'none';
-    this.container.appendChild(this.overlay);
+    wrapper.appendChild(this.overlay);
+    
+    this.container.appendChild(wrapper);
     
     this.updateBoardDisplay();
   }
@@ -231,10 +251,11 @@ class ConnectFour {
     }
     
     // Simulate drop animation
-    setTimeout(() => {
+    const t = setTimeout(() => {
       disc.classList.remove('connect-four-disc-dropping');
       if (callback) callback();
     }, 400);
+    this.dropTimeouts.push(t);
   }
   
   checkWin(row, col, player) {
@@ -300,7 +321,7 @@ class ConnectFour {
   
   scheduleAIMove() {
     // Delay AI move for better UX
-    setTimeout(() => {
+    this.aiTimeout = setTimeout(() => {
       if (this.gameActive && !this.pausedState && this.currentPlayer === 'ai') {
         const col = this.getAIMove();
         this.dropDisc(col, this.AI_DISC);

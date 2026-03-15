@@ -43,7 +43,7 @@ class RobotEscape {
   init() {
     // Create canvas
     this.canvas = document.createElement('canvas');
-    this.canvas.className = 'robot-escape-game-canvas';
+    this.canvas.className = 'robot-escape-game-canvas game-canvas';
     this.canvas.width = 700;
     this.canvas.height = 400;
     this.ctx = this.canvas.getContext('2d');
@@ -85,13 +85,20 @@ class RobotEscape {
     this.container.appendChild(uiContainer);
     this.container.appendChild(this.mobileUI);
 
-    // Event listeners
-    window.addEventListener('keydown', (e) => this.handleKeyDown(e));
-    window.addEventListener('keyup', (e) => this.handleKeyUp(e));
-    this.mobileUI.addEventListener('touchstart', (e) => this.handleTouchStart(e));
-    this.mobileUI.addEventListener('touchend', (e) => this.handleTouchEnd(e));
-    this.mobileUI.addEventListener('mousedown', (e) => this.handleMouseDown(e));
-    this.mobileUI.addEventListener('mouseup', (e) => this.handleMouseUp(e));
+    // Event listeners (stored as bound references for proper cleanup)
+    this._handleKeyDown = (e) => this.handleKeyDown(e);
+    this._handleKeyUp = (e) => this.handleKeyUp(e);
+    this._handleTouchStart = (e) => this.handleTouchStart(e);
+    this._handleTouchEnd = (e) => this.handleTouchEnd(e);
+    this._handleMouseDown = (e) => this.handleMouseDown(e);
+    this._handleMouseUp = (e) => this.handleMouseUp(e);
+
+    window.addEventListener('keydown', this._handleKeyDown);
+    window.addEventListener('keyup', this._handleKeyUp);
+    this.mobileUI.addEventListener('touchstart', this._handleTouchStart);
+    this.mobileUI.addEventListener('touchend', this._handleTouchEnd);
+    this.mobileUI.addEventListener('mousedown', this._handleMouseDown);
+    this.mobileUI.addEventListener('mouseup', this._handleMouseUp);
   }
 
   handleKeyDown(e) {
@@ -698,13 +705,14 @@ class RobotEscape {
     if (this.animationFrameId) {
       cancelAnimationFrame(this.animationFrameId);
     }
-    window.removeEventListener('keydown', (e) => this.handleKeyDown(e));
-    window.removeEventListener('keyup', (e) => this.handleKeyUp(e));
+    this.gameState = 'menu';
+    window.removeEventListener('keydown', this._handleKeyDown);
+    window.removeEventListener('keyup', this._handleKeyUp);
     if (this.mobileUI) {
-      this.mobileUI.removeEventListener('touchstart', (e) => this.handleTouchStart(e));
-      this.mobileUI.removeEventListener('touchend', (e) => this.handleTouchEnd(e));
-      this.mobileUI.removeEventListener('mousedown', (e) => this.handleMouseDown(e));
-      this.mobileUI.removeEventListener('mouseup', (e) => this.handleMouseUp(e));
+      this.mobileUI.removeEventListener('touchstart', this._handleTouchStart);
+      this.mobileUI.removeEventListener('touchend', this._handleTouchEnd);
+      this.mobileUI.removeEventListener('mousedown', this._handleMouseDown);
+      this.mobileUI.removeEventListener('mouseup', this._handleMouseUp);
     }
     if (this.container) {
       this.container.innerHTML = '';

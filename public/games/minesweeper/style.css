@@ -7,7 +7,6 @@
   margin: 0 auto;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  min-height: 100vh;
   border-radius: 12px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
@@ -148,17 +147,18 @@
 
 .minesweeper-board {
   display: grid;
-  gap: 4px;
+  gap: 3px;
   background: #f5f5f5;
   padding: 12px;
   border-radius: 8px;
   box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: fit-content;
   max-width: 100%;
+  margin: 0 auto;
   overflow: auto;
 }
 
 .minesweeper-cell {
-  aspect-ratio: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -166,7 +166,7 @@
   border: 2px outset #999;
   border-radius: 3px;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 16px;
   cursor: pointer;
   user-select: none;
   transition: all 0.1s ease;

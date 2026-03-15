@@ -7,6 +7,7 @@ class Reversi {
     this.currentPlayer = 'black'; // Player is black, AI is white
     this.validMoves = [];
     this.animatingCells = new Set();
+    this.pendingTimeouts = [];
     this.moveDelay = 1000; // Delay before AI moves
 
     // Create DOM structure
@@ -67,6 +68,10 @@ class Reversi {
   }
 
   initBoard() {
+    // Clear any pending timeouts from previous game
+    this.pendingTimeouts.forEach(t => clearTimeout(t));
+    this.pendingTimeouts = [];
+
     // Initialize empty board
     this.board = Array(64).fill(null);
 
@@ -108,6 +113,10 @@ class Reversi {
   }
 
   destroy() {
+    this.gameOver = true;
+    this.isPaused = true;
+    this.pendingTimeouts.forEach(t => clearTimeout(t));
+    this.pendingTimeouts = [];
     this.container.innerHTML = '';
     this.board = [];
     this.cells = [];
@@ -241,12 +250,13 @@ class Reversi {
     cell.classList.add('reversi-flip-animate');
 
     // Update board after animation
-    setTimeout(() => {
+    const t = setTimeout(() => {
       this.board[index] = toPlayer;
       this.renderBoard();
       cell.classList.remove('reversi-flip-animate');
       this.animatingCells.delete(index);
     }, 300);
+    this.pendingTimeouts.push(t);
   }
 
   handleBoardClick(e) {
@@ -263,7 +273,8 @@ class Reversi {
     this.validMoves = [];
 
     // Next turn
-    setTimeout(() => this.nextTurn(), 400);
+    const t1 = setTimeout(() => this.nextTurn(), 400);
+    this.pendingTimeouts.push(t1);
   }
 
   nextTurn() {
@@ -290,7 +301,8 @@ class Reversi {
 
     // AI turn
     if (this.currentPlayer === 'white' && !this.isPaused) {
-      setTimeout(() => this.makeAIMove(), this.moveDelay);
+      const t3 = setTimeout(() => this.makeAIMove(), this.moveDelay);
+      this.pendingTimeouts.push(t3);
     }
   }
 
@@ -308,7 +320,8 @@ class Reversi {
     this.flipPieces(move, 'white');
     this.validMoves = [];
 
-    setTimeout(() => this.nextTurn(), 400);
+    const t2 = setTimeout(() => this.nextTurn(), 400);
+    this.pendingTimeouts.push(t2);
   }
 
   selectAIMove(moves) {

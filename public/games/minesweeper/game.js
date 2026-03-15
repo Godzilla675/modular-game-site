@@ -18,9 +18,9 @@ class Minesweeper {
 
   // Difficulty configurations
   difficulties = {
-    easy: { width: 9, height: 9, mines: 10 },
-    medium: { width: 16, height: 16, mines: 40 },
-    hard: { width: 30, height: 16, mines: 99 }
+    easy: { width: 9, height: 9, mines: 10, cellSize: 38, gap: 2, fontSize: 18, maxWidth: 380 },
+    medium: { width: 16, height: 16, mines: 40, cellSize: 28, gap: 2, fontSize: 14, maxWidth: 480 },
+    hard: { width: 30, height: 16, mines: 99, cellSize: 18, gap: 1, fontSize: 11, maxWidth: 570 }
   };
 
   // Color map for numbers 1-8
@@ -113,9 +113,13 @@ class Minesweeper {
   }
 
   createBoard() {
+    const config = this.difficulties[this.difficulty];
     this.boardContainer.innerHTML = '';
-    this.boardContainer.style.gridTemplateColumns = `repeat(${this.width}, 1fr)`;
-    this.boardContainer.style.gridTemplateRows = `repeat(${this.height}, 1fr)`;
+    this.boardContainer.style.gridTemplateColumns = `repeat(${this.width}, ${config.cellSize}px)`;
+    this.boardContainer.style.gridTemplateRows = `repeat(${this.height}, ${config.cellSize}px)`;
+    this.boardContainer.style.gap = `${config.gap}px`;
+    this.boardContainer.style.fontSize = `${config.fontSize}px`;
+    this.boardContainer.style.maxWidth = `${config.maxWidth}px`;
 
     for (let i = 0; i < this.width * this.height; i++) {
       const cell = document.createElement('div');
